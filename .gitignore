@@ -10,7 +10,7 @@ Thumbs.db
 *~
 
 # Maven
-uutisjuttu/log/
-uutisjuttu/target/
-/uutisjuttu/log/
-/uutisjuttu/target/
+log/
+target/
+/log/
+/target/

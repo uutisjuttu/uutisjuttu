@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: fi.uutisjuttu.uutisjuttu.controller.DefaultControllerTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.595 sec - in fi.uutisjuttu.uutisjuttu.controller.DefaultControllerTest
