@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import fi.uutisjuttu.uutisjuttu.profiles.DevProfile;
 import fi.uutisjuttu.uutisjuttu.profiles.ProdProfile;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @Configuration
 @EnableAutoConfiguration
+@EnableAsync
 @ComponentScan
 @Import({DevProfile.class, ProdProfile.class})
 public class Application {

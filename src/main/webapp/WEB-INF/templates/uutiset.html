@@ -13,7 +13,14 @@ and open the template in the editor.
         <div>Uutiset:</div>
 
         <div th:each="uutinen : ${uutiset}">
-            <span th:text="${uutinen.url}">url</span>
+            <a th:href="${uutinen.url}"><h3 th:text="${uutinen.title}">Otsikko</h3></a>
+            <span th:text="${uutinen.description}">url</span>
         </div>
+
+        <div>Lisää uutinen:</div>
+        <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">
+            <textarea name="url"></textarea>
+            <input type="submit" value="Lisää"/>
+        </form>
     </body>
 </html>
