@@ -2,6 +2,7 @@ package fi.uutisjuttu.uutisjuttu.domain;
 
 import javax.persistence.Entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
 public class Kayttaja extends AbstractPersistable<Long>{
@@ -22,7 +23,8 @@ public class Kayttaja extends AbstractPersistable<Long>{
     }
 
     public void setSalasana(String salasana) {
-        this.salasana = salasana;
+        this.salt = BCrypt.gensalt();
+        this.salasana = BCrypt.hashpw(salasana, this.salt);
     }
 
     public String getSalt() {
