@@ -10,10 +10,6 @@ import fi.uutisjuttu.uutisjuttu.domain.Kayttaja;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-/**
- *
- * @author mikko
- */
 @RepositoryRestResource(path="kayttajat")
 public interface KayttajaRepository extends JpaRepository<Kayttaja, Long>{
     
