@@ -12,5 +12,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path="kayttajat")
 public interface KayttajaRepository extends JpaRepository<Kayttaja, Long>{
-    
+    Kayttaja findByTunnus(String tunnus);
 }

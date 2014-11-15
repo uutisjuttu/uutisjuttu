@@ -7,9 +7,6 @@ package fi.uutisjuttu.uutisjuttu.service;
 
 import fi.uutisjuttu.uutisjuttu.domain.Uutinen;
 import fi.uutisjuttu.uutisjuttu.repository.UutinenRepository;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
