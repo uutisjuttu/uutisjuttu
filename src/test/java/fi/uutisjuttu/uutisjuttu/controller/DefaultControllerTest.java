@@ -1,4 +1,3 @@
-
 package fi.uutisjuttu.uutisjuttu.controller;
 
 import fi.uutisjuttu.uutisjuttu.Application;
@@ -24,14 +23,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class DefaultControllerTest {
-    
+
     private final String API_URI = "/api/uutiset";
-     
+
     @Autowired
     private WebApplicationContext webAppContext;
- 
+
     private MockMvc mockMvc;
-    
+
     @Before
     public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
@@ -41,5 +40,10 @@ public class DefaultControllerTest {
     public void testIndexSivuNakyy() throws Exception {
         MvcResult result = mockMvc.perform(get(API_URI)).andExpect(status().isOk()).andReturn();
     }
-    
+
+    @Test
+    public void testIndexSivuSisaltaaSananEeppinen() throws Exception {
+        MvcResult result = mockMvc.perform(get(API_URI)).andExpect(status().isOk()).andReturn();
+    }
+
 }

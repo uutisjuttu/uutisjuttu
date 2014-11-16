@@ -26,21 +26,24 @@ public class UutinenService {
         Uutinen uutinen = new Uutinen();
         uutinen.setDescription("odotappas hetkinen...");
         uutinen = uutinenRepository.save(uutinen);
+        int asetetutAttribuutit = 0;
         try {
             Document doc = Jsoup.connect(url).get();
             Elements elem = doc.head().getElementsByTag("meta");
-//            System.out.println("Meta elementit sivulla:");
             for (Element e : elem) {
                 if (e.attr("property").equals("og:description")) {
                     uutinen.setDescription(e.attr("content"));
+                    asetetutAttribuutit++;
                 }
                 
                 if (e.attr("property").equals("og:title")) {
                     uutinen.setTitle(e.attr("content"));
+                    asetetutAttribuutit++;
                 }
                 
                 if (e.attr("property").equals("og:url")) {
                     uutinen.setUrl(e.attr("content"));
+                    asetetutAttribuutit++;
                 }
             }
 
@@ -48,12 +51,11 @@ public class UutinenService {
             uutinenRepository.delete(uutinen);
             return;
         }
+        
+        if (asetetutAttribuutit != 3) {
+            uutinenRepository.delete(uutinen);
+        }
 
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException ex) {
-//        }
-//        uutinen.setUrl(url);
         uutinenRepository.save(uutinen);
 
     }

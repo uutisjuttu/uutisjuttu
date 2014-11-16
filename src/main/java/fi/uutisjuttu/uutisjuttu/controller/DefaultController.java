@@ -21,12 +21,6 @@ public class DefaultController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getDefaultPage() {
-        Kayttaja k = kayttajaService.getAuthenticatedPerson();
-        if (k != null) {
-            System.out.println(k.getTunnus());
-        } else {
-            System.out.println("ei autentikoitunut");
-        }
         return "index";
     }
 
