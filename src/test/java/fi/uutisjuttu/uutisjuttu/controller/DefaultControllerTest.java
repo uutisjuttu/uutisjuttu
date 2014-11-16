@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class DefaultControllerTest {
     
-    private final String API_URI = "/index";
+    private final String API_URI = "/api/uutiset";
      
     @Autowired
     private WebApplicationContext webAppContext;

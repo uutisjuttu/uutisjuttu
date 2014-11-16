@@ -2,13 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head lang="en">
         <meta charset="UTF-8" />
-        <title>Messages</title>
+        <title>Uutiset</title>
     </head>
     <body>
+        <div id="topbar">
+            <span sec:authorize="isAuthenticated()">kirjautunut: <span th:text="${#authentication.name}">nimimerkki</span></span>
+            <span sec:authorize="isAnonymous()"><a href="login">login</a> | <a href="signup">signup</a></span> 
+        </div>
         <h1>Moi maailma</h1>
         <p>Oleskelette nyt paikalla, johon on paraikaa rakentumassa eeppinen uutissivusto</p>
         <a href="uutiset">uutiset</a>
-        <a href="login">login</a>
-        <a href="signup">signup</a>
     </body>
 </html>

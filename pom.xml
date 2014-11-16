@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.1.8.RELEASE</version>
+        <version>1.1.7.RELEASE</version>
     </parent>
     <dependencies>
         <dependency>
@@ -31,6 +31,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity3</artifactId>
+        </dependency>   
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -101,7 +105,7 @@
             </plugin>
             
                         
-            <!-- kopioidaan testien käännösvaiheessa templatet target-kansioon;
+            <!--             kopioidaan testien käännösvaiheessa templatet target-kansioon;
             testit eivät muuten löydä niitä (bugi) -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -114,7 +118,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/templates/</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes/WEB-INF/templates/</outputDirectory>
                             <resources>          
                                 <resource>
                                     <directory>src/main/webapp/WEB-INF/templates/</directory>
