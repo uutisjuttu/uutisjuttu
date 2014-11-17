@@ -30,7 +30,7 @@ public class UutinenServiceTest {
     public void uutisestaSaadaanLuettuaMetatiedotOikein() throws InterruptedException {
         uutinenService.lisaaUutinenOsoitteenPerusteella("http://localhost:8080/test/uutinen1");
 
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         Uutinen u = uutinenRepository.findByUrl("http://localhost:8080/test/uutinen1?jako=1");
 
