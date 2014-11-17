@@ -1,0 +1,103 @@
+body {
+    background-color: #e69138;
+}
+
+a:link {
+    text-decoration: none;
+    color:black;
+}
+
+a:visited {
+    text-decoration: none;
+    color:black;
+}
+
+a:hover {
+    text-decoration: underline;
+    color:black;
+}
+
+a:active {
+    text-decoration: underline;
+    color:black;
+}
+
+#wrapper {
+    background-color: #fefefe;
+    width: 1200px;
+    margin: auto;
+}
+
+#pubdate {
+    font-size:12px;
+    color: #555555;
+    font-family: "verdana", Sans;
+}
+
+#topbar {
+    background-color: #fff2cc;
+    font-family: "courier new", Serif;
+}
+
+#title {
+    padding: 10px;
+}
+
+#topbar h1 {
+    font-weight: lighter;
+    font-size: 40px;
+    line-height:40px;
+    margin: 0px;
+}
+
+#topbar h2 {
+    font-weight: lighter;
+    font-size: 20px;
+    line-height:10px;
+    margin: 0px;
+}
+
+#navbar {
+    background-color: #fcefe0;
+    font-weight: bold;
+    font-family: "Helvetica", Sans;
+    margin: 0px;
+    padding: 4px;
+/*    line-height: 16px;*/
+}
+
+#content {
+    padding: 10px;
+}
+
+#publisher-image {
+    float:left;
+    border: 1px solid;
+}
+
+#news-content {
+    font-family: "Georgia", "courier new", serif;
+    display:inline-block;
+    padding: 10px;
+}
+
+#news-content h3 {
+    font-weight: normal;
+    margin:0px;
+    font-size: 28px;
+}
+
+#news-title-publisher {
+    padding: 10px;
+    float: right;
+}
+
+#news-description p {
+    font-family: "Georgia", "courier new", serif;
+    margin:0px;
+}
+
+#kommentit h2 {
+    font-family: "Helvetica", Sans;
+    font-weight: normal;
+}
