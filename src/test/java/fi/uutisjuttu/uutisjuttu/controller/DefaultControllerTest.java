@@ -41,9 +41,4 @@ public class DefaultControllerTest {
         MvcResult result = mockMvc.perform(get(API_URI)).andExpect(status().isOk()).andReturn();
     }
 
-    @Test
-    public void testIndexSivuSisaltaaSananEeppinen() throws Exception {
-        MvcResult result = mockMvc.perform(get(API_URI)).andExpect(status().isOk()).andReturn();
-    }
-
 }

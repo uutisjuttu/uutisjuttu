@@ -58,6 +58,7 @@ public class UutinenService {
 
         uutinenRepository.save(uutinen);
 
+        return;
     }
 
 }

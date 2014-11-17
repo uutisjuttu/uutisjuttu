@@ -6,5 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path="uutiset")
 public interface UutinenRepository extends JpaRepository<Uutinen, Long> {
-    
+    public Uutinen findByUrl(String url);
 }
