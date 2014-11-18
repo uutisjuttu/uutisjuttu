@@ -8,19 +8,27 @@ and open the template in the editor.
     <head>
         <title>Uutiset</title>
         <meta charset="UTF-8"></meta>
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+
     </head>
     <body>
-        <div>Uutiset:</div>
+        <div id="wrapper">
+            <div th:replace="navbar :: topbar"  id="topbar">
+            </div>
+            <div id="content">
+                <div>Uutiset:</div>
 
-        <div th:each="uutinen : ${uutiset}">
-            <a th:href="${uutinen.url}"><h3 th:text="${uutinen.title}">Otsikko</h3></a>
-            <span th:text="${uutinen.description}">url</span>
+                <div th:each="uutinen : ${uutiset}">
+                    <a th:href="@{/uutiset/{id}(id=${uutinen.id})}"><h3 th:text="${uutinen.title}">Otsikko</h3></a>
+                    <div th:text="${uutinen.description}">url</div>
+                </div>
+
+                <div>Lisää uutinen:</div>
+                <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">
+                    <textarea name="url"></textarea>
+                    <input type="submit" value="Lisää"/>
+                </form>
+            </div>
         </div>
-
-        <div>Lisää uutinen:</div>
-        <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">
-            <textarea name="url"></textarea>
-            <input type="submit" value="Lisää"/>
-        </form>
     </body>
 </html>

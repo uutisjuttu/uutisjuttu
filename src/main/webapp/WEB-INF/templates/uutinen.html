@@ -3,49 +3,43 @@
     <head>
         <title>Uutisjuttu</title>
         <meta charset="UTF-8"></meta>
-        <link rel="stylesheet" type="text/css" href="css/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
     </head>
     <body>
         <div id="wrapper">
-            <div id="topbar">
-                <div id="title">
-                    <h1>UUTISJUTTU.fi</h1>
-                    <h2>-Mistä Suomi puhuu tänään?</h2>
-                </div>
-                <div id="navbar">
-                    <span class="teksti">
-                        Uusimmat jutut &nbsp;&nbsp;&nbsp; Luetuimmat jutut &nbsp;&nbsp;&nbsp; Tilastot &nbsp;&nbsp;&nbsp; Tietoa palvelusta &nbsp;&nbsp;&nbsp; 
-                        <span sec:authorize="isAuthenticated()">kirjautunut: <span th:text="${#authentication.name}">nimimerkki</span></span>
-                        <span sec:authorize="isAnonymous()"><a href="login">login</a> | <a href="signup">signup</a></span> 
-                    </span>
-                </div>
+            <div th:replace="navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
-                <div id="pubdate"><p>Julkaistu 16.11.2014 14:34 (5 päivää sitten)</p></div>
-                <a href="http://www.hs.fi/kaupunki/a1416107739345?jako=28c44ef205324f73b4da39dd4534ab46&ref=og-url">
-                    <div id="news-content"> </img>
-                        <img id="publisher-image" src="http://www.beneq.com/sites/default/files/imagecache/Logo/helsingin_sanomat%20copy.gif" width="80px" height="80px">
-                            <div id="news-title-publisher">
-                                <h3>Miesjoukko yltyi joukkotappeluun Vantaan Ikean parkkipaikalla</h3>
-                                <span>Helsingin Sanomat</span>
-                            </div>
+                
+                <div th:include="navbar :: copy"></div>
+                
+                <div id="pubdate"><p>Julkaistu 01.01.1970 00:00 (5 päivää sitten)</p></div>
+                <!--                <a th:href="${uutinen.url}" href="http://www.hs.fi/kaupunki/a1416107739345?jako=28c44ef205324f73b4da39dd4534ab46&ref=og-url">-->
+                <a th:href="${uutinen.url}">
+
+                    <div id="news-content"> 
+                        <img id="publisher-image" src="http://www.beneq.com/sites/default/files/imagecache/Logo/helsingin_sanomat%20copy.gif" width="80" height="80" alt="kuva"></img>
+                        <div id="news-title-publisher">
+                            <h3 th:text="${uutinen.title}">Miesjoukko yltyi joukkotappeluun Vantaan Ikean parkkipaikalla</h3>
+                            <span>Julkaisijan nimi</span>
+                        </div>
                     </div>
                 </a>
                 <div id="news-description">
-                    <p>Noin neljäkymmentävuotias mies joutui ison miesjoukon pahoinpitelemäksi Ikean tavaratalon pysäköintialueella Vantaalla lauantaina iltapäivällä. </p>
+                    <p th:text="${uutinen.description}">Noin neljäkymmentävuotias mies joutui ison miesjoukon pahoinpitelemäksi Ikean tavaratalon pysäköintialueella Vantaalla lauantaina iltapäivällä. </p>
                 </div>
                 <div id="kommentit">
                     <h2>8 kommenttia</h2>
                 </div>
-                <hr>
-                    <div class="kommentti">kommentti1</div>
-                    <div class="kommentti">kommentti2</div>
-                    <div class="kommentti">kommentti3</div>
-                    <div class="kommentti">kommentti4</div>
-                    <div class="kommentti">kommentti5</div>
-                    <div class="kommentti">kommentti6</div>
-                    <div class="kommentti">kommentti7</div>
-                    <div class="kommentti">kommentti8</div>
+                <hr></hr>
+                <div class="kommentti">kommentti1</div>
+                <div class="kommentti">kommentti2</div>
+                <div class="kommentti">kommentti3</div>
+                <div class="kommentti">kommentti4</div>
+                <div class="kommentti">kommentti5</div>
+                <div class="kommentti">kommentti6</div>
+                <div class="kommentti">kommentti7</div>
+                <div class="kommentti">kommentti8</div>
             </div>
         </div>
     </body>

@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/login", "/signup", "/static*/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/kayttajat").permitAll()
-                .antMatchers("/uutiset").permitAll()
+                .antMatchers("/uutiset", "/uutiset/*").permitAll()
                 .antMatchers("/test/*").permitAll()
                 .antMatchers("/api/*").permitAll()
                 .anyRequest().authenticated();

@@ -90,6 +90,7 @@ a:active {
 #news-title-publisher {
     padding: 10px;
     float: right;
+    width: 1000px;
 }
 
 #news-description p {

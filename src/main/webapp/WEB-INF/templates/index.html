@@ -2,19 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head lang="en">
         <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
         <title>Uutiset</title>
     </head>
     <body>
-        <div id="topbar">
-            <h1>UUTISJUTTU.fi</h1>
-            <h2>-Mistä Suomi puhuu tänään?</h2>
-            <div id="navbar">
-            <span sec:authorize="isAuthenticated()">kirjautunut: <span th:text="${#authentication.name}">nimimerkki</span></span>
-            <span sec:authorize="isAnonymous()"><a href="login">login</a> | <a href="signup">signup</a></span> 
+        <div id="wrapper">
+            <div th:replace="navbar :: topbar"  id="topbar">
+            </div>
+            <div id="content">
+                <h1>Moi maailma</h1>
+                <p>Oleskelette nyt paikalla, johon on paraikaa rakentumassa eeppinen uutissivusto</p>
+                <a href="uutiset">uutiset</a>
             </div>
         </div>
-        <h1>Moi maailma</h1>
-        <p>Oleskelette nyt paikalla, johon on paraikaa rakentumassa eeppinen uutissivusto</p>
-        <a href="uutiset">uutiset</a>
     </body>
 </html>

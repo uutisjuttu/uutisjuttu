@@ -1,6 +1,8 @@
 package fi.uutisjuttu.uutisjuttu.profiles;
 
+import fi.uutisjuttu.uutisjuttu.domain.Kayttaja;
 import fi.uutisjuttu.uutisjuttu.domain.Uutinen;
+import fi.uutisjuttu.uutisjuttu.repository.KayttajaRepository;
 import fi.uutisjuttu.uutisjuttu.repository.UutinenRepository;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class DevProfile {
     @Autowired
     private UutinenRepository uutinenRepository;
     
+    @Autowired
+    private KayttajaRepository kayttajaRepository;
+    
     @PostConstruct
     public void init() {
         Uutinen u1 = new Uutinen();
@@ -26,8 +31,12 @@ public class DevProfile {
         u2.setUrl("http://www.hs.fi/kotimaa/a1414991824044");
         u2.setTitle("Pirkanmaalla toiminut valelääkäri opiskelee Oulussa lääkäriksi romanialaisena vaihto-oppilaana");
         u2.setDescription("Pirkanmaalla valelääkärinä toiminut mies opiskelee parhaillaan Oulun yliopiston lääketieteellisessä tiedekunnassa. Asiasta kertoi Seiska verkkosivuillaan.");
-        
         uutinenRepository.save(u2);
+        
+        Kayttaja k1 = new Kayttaja();
+        k1.setTunnus("testaaja");
+        k1.setSalasana("salasana");
+        kayttajaRepository.save(k1);
     }
     
 }
