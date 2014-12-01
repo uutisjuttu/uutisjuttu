@@ -7,6 +7,7 @@ import fi.uutisjuttu.uutisjuttu.repository.UserRepository;
 import fi.uutisjuttu.uutisjuttu.repository.CommentRepository;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import fi.uutisjuttu.uutisjuttu.service.UserService;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ public class CommentController {
         kommentti.setNews(uutinen);
         kommentti.setAuthor(lahettaja);
         kommentti.setContent(content);
+        kommentti.setPostDate(new Date());
         kommentti = kommenttiRepository.save(kommentti);
         uutinen.getComments().add(kommentti);
         uutinenRepository.save(uutinen);
