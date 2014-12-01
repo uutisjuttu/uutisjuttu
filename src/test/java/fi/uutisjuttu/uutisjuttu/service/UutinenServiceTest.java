@@ -1,8 +1,8 @@
 package fi.uutisjuttu.uutisjuttu.service;
 
 import fi.uutisjuttu.uutisjuttu.Application;
-import fi.uutisjuttu.uutisjuttu.domain.Uutinen;
-import fi.uutisjuttu.uutisjuttu.repository.UutinenRepository;
+import fi.uutisjuttu.uutisjuttu.domain.News;
+import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class UutinenServiceTest {
     private UutinenService uutinenService;
 
     @Autowired
-    private UutinenRepository uutinenRepository;
+    private NewsRepository uutinenRepository;
 
     @Test
     public void alussaOnKaksiUutista() {
@@ -32,7 +32,7 @@ public class UutinenServiceTest {
 
         Thread.sleep(1000);
 
-        Uutinen u = uutinenRepository.findByUrl("http://localhost:8080/test/uutinen1?jako=1");
+        News u = uutinenRepository.findByUrl("http://localhost:8080/test/uutinen1?jako=1");
 
         assertNotNull(u);
         assertEquals("Kehitteillä oleva uutiskommentointisivusto julkaisi tänään ensimmäisen puhtaasti testitarkoituksessa käytetyn uutisen.", u.getDescription());

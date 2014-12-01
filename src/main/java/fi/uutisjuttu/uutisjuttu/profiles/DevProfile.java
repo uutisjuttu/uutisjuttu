@@ -1,11 +1,11 @@
 package fi.uutisjuttu.uutisjuttu.profiles;
 
-import fi.uutisjuttu.uutisjuttu.domain.Kayttaja;
-import fi.uutisjuttu.uutisjuttu.domain.Kommentti;
-import fi.uutisjuttu.uutisjuttu.domain.Uutinen;
-import fi.uutisjuttu.uutisjuttu.repository.KayttajaRepository;
-import fi.uutisjuttu.uutisjuttu.repository.KommenttiRepository;
-import fi.uutisjuttu.uutisjuttu.repository.UutinenRepository;
+import fi.uutisjuttu.uutisjuttu.domain.User;
+import fi.uutisjuttu.uutisjuttu.domain.Comment;
+import fi.uutisjuttu.uutisjuttu.domain.News;
+import fi.uutisjuttu.uutisjuttu.repository.UserRepository;
+import fi.uutisjuttu.uutisjuttu.repository.CommentRepository;
+import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,45 +17,45 @@ import org.springframework.context.annotation.Profile;
 public class DevProfile {
 
     @Autowired
-    private UutinenRepository uutinenRepository;
+    private NewsRepository uutinenRepository;
 
     @Autowired
-    private KayttajaRepository kayttajaRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private KommenttiRepository kommenttiRepository;
+    private CommentRepository kommenttiRepository;
 
     @PostConstruct
     public void init() {
-        Uutinen u1 = new Uutinen();
+        News u1 = new News();
         u1.setUrl("http://yle.fi/uutiset/new_yorkin_uusi_wtc-rakennus_avautui_liiketoiminnalle__ensimmaiset_tyontekijat_muuttivat/7597536");
         u1.setTitle("New Yorkin uusi WTC-rakennus avautui liiketoiminnalle – ensimmäiset työntekijät muuttivat");
         u1.setDescription("One World Trade Centerin ensimmäinen vuokralainen on kustannusyhtiö Conde Nast.");
-        u1.setKommentit(new ArrayList<Kommentti>());
+        u1.setComments(new ArrayList<Comment>());
         u1 = uutinenRepository.save(u1);
 
-        Uutinen u2 = new Uutinen();
+        News u2 = new News();
         u2.setUrl("http://www.hs.fi/kotimaa/a1414991824044");
         u2.setTitle("Pirkanmaalla toiminut valelääkäri opiskelee Oulussa lääkäriksi romanialaisena vaihto-oppilaana");
         u2.setDescription("Pirkanmaalla valelääkärinä toiminut mies opiskelee parhaillaan Oulun yliopiston lääketieteellisessä tiedekunnassa. Asiasta kertoi Seiska verkkosivuillaan.");
-        u2.setKommentit(new ArrayList<Kommentti>());
+        u2.setComments(new ArrayList<Comment>());
         u2 = uutinenRepository.save(u2);
 
-        Kayttaja k1 = new Kayttaja();
-        k1.setTunnus("testaaja");
-        k1.setSalasana("salasana");
-        k1.setKommentit(new ArrayList<Kommentti>());
-        k1 = kayttajaRepository.save(k1);
+        User k1 = new User();
+        k1.setUsername("testaaja");
+        k1.setPassword("salasana");
+        k1.setKommentit(new ArrayList<Comment>());
+        k1 = userRepository.save(k1);
 
-        Kommentti kommentti1 = new Kommentti();
-        kommentti1.setLahettaja(k1);
-        kommentti1.setUutinen(u2);
-        kommentti1.setSisalto("Nyt on siellä paikassa missä potilaat olisivat toivoneet olleen jo paljon aikaisemmin");
+        Comment kommentti1 = new Comment();
+        kommentti1.setAuthor(k1);
+        kommentti1.setNews(u2);
+        kommentti1.setContent("Nyt on siellä paikassa missä potilaat olisivat toivoneet olleen jo paljon aikaisemmin");
         kommentti1 = kommenttiRepository.save(kommentti1);
-        k1.getKommentit().add(kommentti1);
-        u2.getKommentit().add(kommentti1);
+        k1.getComments().add(kommentti1);
+        u2.getComments().add(kommentti1);
         uutinenRepository.save(u2);
-        kayttajaRepository.save(k1);
+        userRepository.save(k1);
         
     }
 

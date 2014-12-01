@@ -5,8 +5,8 @@
  */
 package fi.uutisjuttu.uutisjuttu.service;
 
-import fi.uutisjuttu.uutisjuttu.domain.Uutinen;
-import fi.uutisjuttu.uutisjuttu.repository.UutinenRepository;
+import fi.uutisjuttu.uutisjuttu.domain.News;
+import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 public class UutinenService {
 
     @Autowired
-    private UutinenRepository uutinenRepository;
+    private NewsRepository uutinenRepository;
 
     @Async
     public void lisaaUutinenOsoitteenPerusteella(String url) {
-        Uutinen uutinen = new Uutinen();
+        News uutinen = new News();
         uutinen.setDescription("odotappas hetkinen...");
         uutinen = uutinenRepository.save(uutinen);
         int asetetutAttribuutit = 0;

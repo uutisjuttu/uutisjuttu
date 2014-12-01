@@ -6,8 +6,8 @@
 
 package fi.uutisjuttu.uutisjuttu.auth;
 
-import fi.uutisjuttu.uutisjuttu.domain.Kayttaja;
-import fi.uutisjuttu.uutisjuttu.repository.KayttajaRepository;
+import fi.uutisjuttu.uutisjuttu.domain.User;
+import fi.uutisjuttu.uutisjuttu.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +24,21 @@ import org.springframework.stereotype.Component;
 public class JpaAuthenticationProvider implements AuthenticationProvider {
     
     @Autowired
-    private KayttajaRepository kayttajaRepository;
+    private UserRepository kayttajaRepository;
 
     @Override
     public Authentication authenticate(Authentication a) throws AuthenticationException {
         String username = a.getPrincipal().toString();
         String password = a.getCredentials().toString();
 
-        Kayttaja kayttaja = kayttajaRepository.findByTunnus(username);
+        User kayttaja = kayttajaRepository.findByUsername(username);
 
         if (kayttaja == null) {
             throw new AuthenticationException("Unable to authenticate user " + username) {
             };
         }
 
-        if (!BCrypt.hashpw(password, kayttaja.getSalt()).equals(kayttaja.getSalasana())) {
+        if (!BCrypt.hashpw(password, kayttaja.getSalt()).equals(kayttaja.getPassword())) {
             throw new AuthenticationException("Unable to authenticate user " + username) {
             };
         }
@@ -46,7 +46,7 @@ public class JpaAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
         grantedAuths.add(new SimpleGrantedAuthority("USER"));
 
-        return new UsernamePasswordAuthenticationToken(kayttaja.getTunnus(), password, grantedAuths);
+        return new UsernamePasswordAuthenticationToken(kayttaja.getUsername(), password, grantedAuths);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package fi.uutisjuttu.uutisjuttu.controller;
 
-import fi.uutisjuttu.uutisjuttu.domain.Kayttaja;
-import fi.uutisjuttu.uutisjuttu.service.KayttajaService;
+import fi.uutisjuttu.uutisjuttu.domain.User;
+import fi.uutisjuttu.uutisjuttu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class DefaultController {
 
     @Autowired
-    private KayttajaService kayttajaService;
+    private UserService kayttajaService;
     
     @RequestMapping(method = RequestMethod.GET)
     public String getDefaultPage() {

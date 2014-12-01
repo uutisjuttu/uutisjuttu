@@ -6,11 +6,9 @@
 
 package fi.uutisjuttu.uutisjuttu.repository;
 
-import fi.uutisjuttu.uutisjuttu.domain.Kayttaja;
+import fi.uutisjuttu.uutisjuttu.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(path="kayttajat")
-public interface KayttajaRepository extends JpaRepository<Kayttaja, Long>{
-    Kayttaja findByTunnus(String tunnus);
+public interface UserRepository extends JpaRepository<User, Long>{
+    User findByUsername(String username);
 }

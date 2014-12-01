@@ -6,12 +6,12 @@ import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class Uutinen extends AbstractPersistable<Long>{
+public class News extends AbstractPersistable<Long>{
     private String url;
     private String description;
     private String title;
     @OneToMany
-    private List<Kommentti> kommentit;
+    private List<Comment> comments;
 
     public String getDescription() {
         return description;
@@ -37,12 +37,12 @@ public class Uutinen extends AbstractPersistable<Long>{
         this.url = url;
     }
 
-    public List<Kommentti> getKommentit() {
-        return kommentit;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setKommentit(List<Kommentti> kommentit) {
-        this.kommentit = kommentit;
+    public void setComments(List<Comment> kommentit) {
+        this.comments = kommentit;
     }
     
 }

@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/uutiset", "/uutiset/*").permitAll()
                 .antMatchers("/kommentit", "/kommentit/*").permitAll()
                 .antMatchers("/test/*").permitAll()
-                .antMatchers("/api/*").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin()

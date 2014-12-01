@@ -15,18 +15,18 @@
 
                 <div id="pubdate"><p>Julkaistu 01.01.1970 00:00 (5 päivää sitten)</p></div>
                 <!--                <a th:href="${uutinen.url}" href="http://www.hs.fi/kaupunki/a1416107739345?jako=28c44ef205324f73b4da39dd4534ab46&ref=og-url">-->
-                <a th:href="${uutinen.url}">
+                <a th:href="${news.url}">
 
                     <div id="news-content"> 
                         <img id="publisher-image" src="http://www.beneq.com/sites/default/files/imagecache/Logo/helsingin_sanomat%20copy.gif" width="80" height="80" alt="kuva"></img>
                         <div id="news-title-publisher">
-                            <h3 th:text="${uutinen.title}">Miesjoukko yltyi joukkotappeluun Vantaan Ikean parkkipaikalla</h3>
+                            <h3 th:text="${news.title}">Miesjoukko yltyi joukkotappeluun Vantaan Ikean parkkipaikalla</h3>
                             <span>Julkaisijan nimi</span>
                         </div>
                     </div>
                 </a>
                 <div id="news-description">
-                    <p th:text="${uutinen.description}">Noin neljäkymmentävuotias mies joutui ison miesjoukon pahoinpitelemäksi Ikean tavaratalon pysäköintialueella Vantaalla lauantaina iltapäivällä. </p>
+                    <p th:text="${news.description}">Noin neljäkymmentävuotias mies joutui ison miesjoukon pahoinpitelemäksi Ikean tavaratalon pysäköintialueella Vantaalla lauantaina iltapäivällä. </p>
                 </div>
                 <div id="kommentit">
                     <h2>Kommentit</h2>
@@ -35,17 +35,17 @@
 
                 <form method="POST" th:action="@{/kommentit}" enctype="multipart/form-data">
                     <textarea name="content"></textarea>
-                    <input type="hidden" name="newsId" th:value="${uutinen.id}"/>
+                    <input type="hidden" name="newsId" th:value="${news.id}"/>
                     <input type="submit" value="Kommentoi"/>
                 </form>
 
-                <div th:each="kommentti : ${uutinen.kommentit}">
+                <div th:each="comment : ${news.comments}">
                     <span class="kommentti">
                         &lt;
-                        <span class="kommentti" th:text="${kommentti.lahettaja != null} ? ${kommentti.lahettaja.tunnus} : 'Anonyymi'">Anssi</span>
+                        <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
                         &gt;: 
                     </span>
-                    <span class="kommentti" th:text="${kommentti.sisalto}">joopa joo</span>
+                    <span class="kommentti" th:text="${comment.content}">joopa joo</span>
             </div>
         </div>
     </div>
