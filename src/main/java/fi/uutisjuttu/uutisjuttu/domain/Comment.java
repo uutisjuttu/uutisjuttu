@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -13,9 +14,13 @@ public class Comment extends AbstractPersistable<Long>{
     @ManyToOne
     private News news;
     private String content;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date postDate;
 
+    public Comment() {
+        this.postDate = new Date();
+    }
+    
     public User getAuthor() {
         return author;
     }

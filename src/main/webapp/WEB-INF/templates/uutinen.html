@@ -41,6 +41,7 @@
 
                 <div th:each="comment : ${news.comments}">
                     <span class="kommentti">
+                        <span th:text="${comment.postDate}">created</span>
                         &lt;
                         <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
                         &gt;: 

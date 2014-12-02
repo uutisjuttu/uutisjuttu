@@ -41,7 +41,6 @@ public class CommentController {
         kommentti.setNews(uutinen);
         kommentti.setAuthor(lahettaja);
         kommentti.setContent(content);
-        kommentti.setPostDate(new Date());
         kommentti = kommenttiRepository.save(kommentti);
         uutinen.getComments().add(kommentti);
         uutinenRepository.save(uutinen);
