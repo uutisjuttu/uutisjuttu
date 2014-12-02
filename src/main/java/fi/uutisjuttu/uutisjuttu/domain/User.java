@@ -3,10 +3,12 @@ package fi.uutisjuttu.uutisjuttu.domain;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
+@Table(name="useraccount")
 public class User extends AbstractPersistable<Long>{
     private String username;
     private String password;

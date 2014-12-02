@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class NewsController {
 
     @Autowired
-    private NewsRepository uutinenRepository;
+    private NewsRepository newsRepository;
     
     @Autowired
     private UutinenService uutinenService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("news", uutinenRepository.findAll());
+        model.addAttribute("news", newsRepository.findAll());
         return "uutiset";
     }
     
@@ -37,7 +37,7 @@ public class NewsController {
     
     @RequestMapping(method = RequestMethod.GET, value="/{id}")
     public String view(@PathVariable Long id, Model model) {
-        model.addAttribute("news", uutinenRepository.findOne(id));
+        model.addAttribute("news", newsRepository.findOne(id));
         return "uutinen";
     }
     
