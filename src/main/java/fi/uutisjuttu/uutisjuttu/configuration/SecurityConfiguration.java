@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/kayttajat").permitAll()
                 .antMatchers("/uutiset", "/uutiset/*").permitAll()
                 .antMatchers("/kommentit", "/kommentit/*").permitAll()
-                .antMatchers("/test/*").permitAll()
+                .antMatchers("/test/**").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
 

@@ -43,12 +43,14 @@
                     <span class="kommentti">
                         <span th:text="${comment.postDate}">created</span>
                         &lt;
-                        <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
+                        <a th:if="${comment.author != null}" th:href="@{/kayttajat/{username}(username=${comment.author.username})}">
+                            <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
+                        </a>
                         &gt;: 
                     </span>
                     <span class="kommentti" th:text="${comment.content}">joopa joo</span>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

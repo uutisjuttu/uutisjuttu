@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Käyttäjä</title>
+        <meta charset="UTF-8"></meta>
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+
+    </head>
+    <body>
+        <div id="wrapper">
+            <div th:replace="navbar :: topbar"  id="topbar">
+            </div>
+            <div id="content">
+                <div>Käyttäjä:</div>
+
+                <div>Nimi: <span th:text="${user.username}"></span></div>
+
+                <div>Kommentit: </div>
+
+                <div th:each="comment : ${user.comments}">
+                    <a th:href="@{/uutiset/{id}(id=${comment.news.id})}"><h3 th:text="${comment.news.title}">Otsikko</h3></a>
+                    <span class="kommentti">
+                        <span th:text="${comment.postDate}">created</span>
+                        &lt;
+                        <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
+                        &gt;: 
+                    </span>
+                    <span class="kommentti" th:text="${comment.content}">joopa joo</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

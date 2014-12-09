@@ -10,6 +10,7 @@ import fi.uutisjuttu.uutisjuttu.service.UserService;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,12 @@ public class CommentController {
 
     @Autowired
     private UserService kayttajaService;
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public String listComments(Model model) {
+        model.addAttribute("comments", kommenttiRepository.findAll());
+        return "comments";
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String lisaaKommentti(@RequestParam Long newsId, @RequestParam String content) {
@@ -36,7 +43,7 @@ public class CommentController {
         if (uutinen == null) {
             return "redirect:/uutiset/" + newsId;
         }
-        User lahettaja = kayttajaService.getAuthenticatedPerson();
+        User lahettaja = kayttajaService.getAuthenticatedUser();
         Comment kommentti = new Comment();
         kommentti.setNews(uutinen);
         kommentti.setAuthor(lahettaja);
