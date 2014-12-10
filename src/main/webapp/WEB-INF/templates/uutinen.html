@@ -44,8 +44,9 @@
                         <span th:text="${comment.postDate}">created</span>
                         &lt;
                         <a th:if="${comment.author != null}" th:href="@{/kayttajat/{username}(username=${comment.author.username})}">
-                            <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
+                            <span class="kommentti" th:text="${comment.author.username}">Anssi</span>
                         </a>
+                        <span th:if="${comment.author == null}" class="kommentti">Anonyymi</span>
                         &gt;: 
                     </span>
                     <span class="kommentti" th:text="${comment.content}">joopa joo</span>

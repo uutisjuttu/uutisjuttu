@@ -28,7 +28,6 @@ and open the template in the editor.
                     Tietoa palvelusta 
                     &nbsp;&nbsp;&nbsp; 
                     <span sec:authorize="isAuthenticated()">kirjautunut: <a th:href="@{/kayttajat/{username}(username=${#authentication.name})}" th:text="${#authentication.name}">nimimerkki</a> | <a href="#" onclick="document.getElementById('logout-form').submit();">Kirjaudu ulos</a></span>
-                    <!--                    <span sec:authorize="isAuthenticated()">kirjautunut: <span th:text="${@authenticatedUser.getUsername()}">nimimerkki</span></span>-->
                     <span sec:authorize="isAnonymous()"><a href="/login">Kirjaudu sisään</a> | <a href="/signup">Tee tunnus</a></span> 
                 </span>
             </div>

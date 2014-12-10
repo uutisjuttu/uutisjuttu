@@ -1,7 +1,6 @@
 package fi.uutisjuttu.uutisjuttu.selenium;
 
 import fi.uutisjuttu.uutisjuttu.Application;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -43,6 +42,80 @@ public class IndexTest {
     public void etusivullaEiOleSanaaSurkea() {
         driver.get("http://localhost:8080");
         assertFalse(driver.getPageSource().contains("surkea"));
+    }
+
+    @Test
+    public void aluksiEiOllaKirjauduttuSisaan() {
+        driver.get("http://localhost:8080");
+        assertTrue(driver.getPageSource().contains("Kirjaudu sisään"));
+        assertFalse(driver.getPageSource().contains("kirjautunut:"));
+    }
+
+    @Test
+    public void kirjautuminenTestitunnuksellaToimii() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("testaaja", "salasana");
+        assertTrue(driver.getPageSource().contains("kirjautunut:"));
+    }
+
+    @Test
+    public void kirjautuminenVaarallaSalasanallaEiToimi() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("testaaja", "vaarasalasana");
+        assertFalse(driver.getPageSource().contains("kirjautunut:"));
+    }
+
+    private void kirjauduSisaan(String tunnus, String salasana) {
+        WebElement element = driver.findElement(By.linkText("Kirjaudu sisään"));
+        element.click();
+        element = driver.findElement(By.name("username"));
+        element.sendKeys(tunnus);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(salasana);
+        element.submit();
+    }
+
+    @Test
+    public void tunnuksenLuominenToimii() {
+        driver.get("http://localhost:8080");
+        driver.findElement(By.linkText("Tee tunnus")).click();
+        driver.findElement(By.name("username")).sendKeys("selenium");
+        driver.findElement(By.name("password")).sendKeys("orava");
+        driver.findElement(By.name("password")).submit();
+        kirjauduSisaan("selenium", "orava");
+        assertTrue(driver.getPageSource().contains("kirjautunut:"));
+    }
+
+    @Test
+    public void uloskirjautuminenToimii() {
+        driver = new HtmlUnitDriver(true);
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("testaaja", "salasana");
+        driver.findElement(By.linkText("Kirjaudu ulos")).click();
+        assertFalse(driver.getPageSource().contains("kirjautunut:"));
+        assertTrue(driver.getPageSource().contains("Kirjaudu sisään"));
+    }
+
+    @Test
+    public void kommentointiToimiiAnonyymisti() {
+        driver.get("http://localhost:8080");
+        driver.findElement(By.linkText("Uutiset")).click();
+        driver.findElement(By.partialLinkText("New Yorkin uusi WTC-rakennus")).click();
+        driver.findElement(By.name("content")).sendKeys("lentokone tulee, oletko valmis?");
+        driver.findElement(By.name("content")).submit();
+        assertTrue(driver.getPageSource().contains("lentokone tulee, oletko valmis?"));
+        assertTrue(driver.getPageSource().contains("Anonyymi"));
+    }
+
+    @Test
+    public void kommentointiToimiiRekisteroityneena() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("testaaja", "salasana");
+        driver.findElement(By.linkText("Uutiset")).click();
+        driver.findElement(By.partialLinkText("New Yorkin uusi WTC-rakennus")).click();
+        driver.findElement(By.name("content")).sendKeys("kuinkahan kauan meinaa pysya pystyssa");
+        driver.findElement(By.name("content")).submit();
+        assertTrue(driver.getPageSource().contains("kuinkahan kauan meinaa pysya pystyssa"));
     }
 
 }
