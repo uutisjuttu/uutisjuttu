@@ -8,9 +8,11 @@ import fi.uutisjuttu.uutisjuttu.repository.CommentRepository;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import fi.uutisjuttu.uutisjuttu.service.UserService;
 import java.util.Date;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +60,20 @@ public class CommentController {
         }
 
         return "redirect:/uutiset/" + newsId;
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}/delete")
+    @Transactional
+    public String deleteComment(@PathVariable Long id) {
+        Comment c = kommenttiRepository.findOne(id);
+        if (c == null) {
+            return "redirect:/uutiset/";
+        }
+        Long newsId = c.getNews().getId();
+        c.getAuthor().getComments().remove(c);
+        c.getNews().getComments().remove(c);
+        kommenttiRepository.delete(c);
+        return "redirect:/uutiset/" + newsId; 
     }
 
 }

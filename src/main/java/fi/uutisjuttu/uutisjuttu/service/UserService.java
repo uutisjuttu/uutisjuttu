@@ -23,10 +23,7 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             return null;
-        }
-        
-        User user = userRepository.findByUsername(authentication.getName());
-        System.out.println("return " + user);
-        return user;
+        }        
+        return userRepository.findByUsername(authentication.getName());
     }
 }

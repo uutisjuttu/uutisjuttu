@@ -50,7 +50,9 @@
                         &gt;: 
                     </span>
                     <span class="kommentti" th:text="${comment.content}">joopa joo</span>
+                    <form th:if="${comment.author != null and comment.author.username == #authentication.name}" th:action="@{/kommentit/{id}/delete(id=${comment.id})}" method="POST"><input type="submit" value="delete"/></form>
                 </div>
+
             </div>
         </div>
     </body>
