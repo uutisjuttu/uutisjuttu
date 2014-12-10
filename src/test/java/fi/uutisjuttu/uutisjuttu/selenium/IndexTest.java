@@ -118,4 +118,12 @@ public class IndexTest {
         assertTrue(driver.getPageSource().contains("kuinkahan kauan meinaa pysya pystyssa"));
     }
 
+    @Test
+    public void kommentoiduimmatUutisetSivuNakyy() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("testaaja", "salasana");
+        driver.get("http://localhost:8080/uutiset/kommentoiduimmat");
+        assertTrue(driver.getPageSource().contains("kirjautunut:"));
+    }
+
 }

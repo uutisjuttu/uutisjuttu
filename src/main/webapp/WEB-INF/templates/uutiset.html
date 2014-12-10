@@ -21,6 +21,7 @@ and open the template in the editor.
                 <div th:each="uutinen : ${news}">
                     <a th:href="@{/uutiset/{id}(id=${uutinen.id})}"><h3 th:text="${uutinen.title}">Otsikko</h3></a>
                     <div th:text="${uutinen.description}">url</div>
+                    <div th:if="${uutinen.comments != null}"><span th:text="${uutinen.comments.size()}">4</span> kommenttia</div>
                 </div>
 
                 <div>Lisää uutinen:</div>

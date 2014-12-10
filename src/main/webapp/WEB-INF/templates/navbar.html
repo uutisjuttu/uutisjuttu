@@ -21,6 +21,8 @@ and open the template in the editor.
                 <span class="teksti">
                     <a href="/uutiset">Uutiset</a>
                     &nbsp;&nbsp;&nbsp;
+                    <a href="/uutiset/kommentoiduimmat">Kommentoiduimmat</a>
+                    &nbsp;&nbsp;&nbsp;
                     <a href="/kommentit">Kommentit</a>
                     &nbsp;&nbsp;&nbsp;
                     Tilastot 
@@ -31,9 +33,9 @@ and open the template in the editor.
                     <span sec:authorize="isAnonymous()"><a href="/login">Kirjaudu sisään</a> | <a href="/signup">Tee tunnus</a></span> 
                 </span>
             </div>
-            
-             <form style="visibility: hidden; display: none" id ="logout-form" method="post" action="#" th:action="@{/logout}"><input type="submit" value="Logout"/></form>
-             
+
+            <form style="visibility: hidden; display: none" id ="logout-form" method="post" action="#" th:action="@{/logout}"><input type="submit" value="Logout"/></form>
+
         </div>
 
 
