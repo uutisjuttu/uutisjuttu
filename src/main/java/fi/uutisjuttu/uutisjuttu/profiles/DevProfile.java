@@ -80,6 +80,12 @@ public class DevProfile {
         u2.getComments().add(kommentti1);
         uutinenRepository.save(u2);
         userRepository.save(k1);
+        
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword("admin");
+        admin.setSuperuser(true);
+        userRepository.save(admin);
 
     }
 

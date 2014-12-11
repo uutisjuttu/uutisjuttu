@@ -1,23 +1,34 @@
 package fi.uutisjuttu.uutisjuttu.domain;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
-@Table(name="useraccount")
-public class User extends AbstractPersistable<Long>{
+@Table(name = "useraccount")
+public class User extends AbstractPersistable<Long> {
+
     private String username;
     private String password;
     private String salt;
-    
-    @OneToMany(fetch=FetchType.EAGER)
+    private boolean superuser;
+    @Temporal(TemporalType.DATE)
+    private Date registerDate;
+
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
 
+    public User() {
+        this.registerDate = new Date();
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -43,6 +54,14 @@ public class User extends AbstractPersistable<Long>{
         this.salt = salt;
     }
 
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
@@ -50,7 +69,13 @@ public class User extends AbstractPersistable<Long>{
     public void setKommentit(List<Comment> comments) {
         this.comments = comments;
     }
-    
-    
-    
+
+    public boolean isSuperuser() {
+        return superuser;
+    }
+
+    public void setSuperuser(boolean superuser) {
+        this.superuser = superuser;
+    }
+
 }

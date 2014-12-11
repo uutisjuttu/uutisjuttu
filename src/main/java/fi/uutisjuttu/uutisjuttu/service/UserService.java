@@ -23,7 +23,11 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             return null;
-        }        
-        return userRepository.findByUsername(authentication.getName());
+        }
+        User user = userRepository.findByUsername(authentication.getName());
+        if (user != null) {
+            System.out.println("admin: " + user.isSuperuser());
+        }
+        return user;
     }
 }
