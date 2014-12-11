@@ -1,8 +1,13 @@
 package fi.uutisjuttu.uutisjuttu.domain;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 //import javax.persistence.PostLoad;
 //import javax.persistence.Transient;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -13,8 +18,17 @@ public class News extends AbstractPersistable<Long> {
     private String url;
     private String description;
     private String title;
-    @OneToMany
+    @Temporal(TemporalType.DATE)
+    private Date submitted;
+    @OneToMany(fetch=FetchType.EAGER)
     private List<Comment> comments;
+    @ManyToOne
+    private Publisher publisher;
+    
+    public News() {
+        this.submitted = new Date();
+    }
+
 //    @Transient
 //    private int numberOfComments;
 //    
@@ -34,7 +48,22 @@ public class News extends AbstractPersistable<Long> {
 //    public void setNumberOfComments(int numberOfComments) {
 //        this.numberOfComments = numberOfComments;
 //    }
+    public Publisher getPublisher() {
+        return publisher;
+    }
 
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+    
+    public Date getSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(Date submitted) {
+        this.submitted = submitted;
+    }
+    
     public String getDescription() {
         return description;
     }

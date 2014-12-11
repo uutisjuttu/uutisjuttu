@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package fi.uutisjuttu.uutisjuttu.configuration;
 
 import fi.uutisjuttu.uutisjuttu.auth.JpaAuthenticationProvider;
@@ -19,7 +18,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 @Configuration
 @EnableWebMvcSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -28,6 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/kayttajat").permitAll()
                 .antMatchers("/uutiset", "/uutiset/*").permitAll()
                 .antMatchers("/kommentit", "/kommentit/*").permitAll()
+                .antMatchers("/tilastot", "/tilastot/**").permitAll()
+                .antMatchers("/julkaisija", "/julkaisija/**").permitAll()
                 .antMatchers("/test/**").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();

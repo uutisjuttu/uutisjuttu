@@ -13,7 +13,7 @@
 
                 <div th:include="navbar :: copy"></div>
 
-                <div id="pubdate"><p>Julkaistu 01.01.1970 00:00 (5 päivää sitten)</p></div>
+                <div id="pubdate"><p>Lisätty palveluun <span th:text="${#calendars.format(news.submitted,'dd.M.yyyy')}">01.01.1970</span></p></div>
                 <!--                <a th:href="${uutinen.url}" href="http://www.hs.fi/kaupunki/a1416107739345?jako=28c44ef205324f73b4da39dd4534ab46&ref=og-url">-->
                 <a th:href="${news.url}">
 
@@ -21,7 +21,7 @@
                         <img id="publisher-image" src="http://www.beneq.com/sites/default/files/imagecache/Logo/helsingin_sanomat%20copy.gif" width="80" height="80" alt="kuva"></img>
                         <div id="news-title-publisher">
                             <h3 th:text="${news.title}">Miesjoukko yltyi joukkotappeluun Vantaan Ikean parkkipaikalla</h3>
-                            <span>Julkaisijan nimi</span>
+                            <span th:text="${news.publisher.name}">Julkaisijan nimi</span>
                         </div>
                     </div>
                 </a>

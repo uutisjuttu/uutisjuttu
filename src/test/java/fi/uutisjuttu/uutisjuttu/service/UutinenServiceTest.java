@@ -16,7 +16,7 @@ import org.junit.Test;
 public class UutinenServiceTest {
 
     @Autowired
-    private UutinenService uutinenService;
+    private NewsService uutinenService;
 
     @Autowired
     private NewsRepository uutinenRepository;
@@ -28,7 +28,7 @@ public class UutinenServiceTest {
 
     @Test
     public void uutisestaSaadaanLuettuaMetatiedotOikein() throws InterruptedException {
-        uutinenService.lisaaUutinenOsoitteenPerusteella("http://localhost:8080/test/uutinen1");
+        uutinenService.addNewsArticleByUrl("http://localhost:8080/test/uutinen1");
 
         Thread.sleep(1000);
 
@@ -38,6 +38,7 @@ public class UutinenServiceTest {
         assertEquals("Kehitteillä oleva uutiskommentointisivusto julkaisi tänään ensimmäisen puhtaasti testitarkoituksessa käytetyn uutisen.", u.getDescription());
         assertEquals("Ensimmäinen testiuutinen on julkaistu", u.getTitle());
         assertEquals("http://localhost:8080/test/uutinen1?jako=1", u.getUrl());
+        assertEquals("Uutisjutun Sanomat", u.getPublisher().getName());
 
     }
 

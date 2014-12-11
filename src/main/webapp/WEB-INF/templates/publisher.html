@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Uutiset</title>
+        <meta charset="UTF-8"></meta>
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+
+    </head>
+    <body>
+        <div id="wrapper">
+            <div th:replace="navbar :: topbar"  id="topbar">
+            </div>
+            <div id="content">
+                <div th:text="${publisher.name}">Uutiset:</div>
+
+                <div th:each="uutinen : ${publisher.news}">
+                    <a th:href="@{/uutiset/{id}(id=${uutinen.id})}"><h3 th:text="${uutinen.title}">Otsikko</h3></a>
+                    <div th:text="${uutinen.description}">url</div>
+                    <div th:if="${uutinen.comments != null}"><span th:text="${uutinen.comments.size()}">4</span> kommenttia</div>
+                </div>
+
+                <div>Lisää uutinen:</div>
+                <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">
+                    <textarea name="url"></textarea>
+                    <input type="submit" value="Lisää"/>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -2,6 +2,7 @@ package fi.uutisjuttu.uutisjuttu.domain;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -14,7 +15,7 @@ public class User extends AbstractPersistable<Long>{
     private String password;
     private String salt;
     
-    @OneToMany
+    @OneToMany(fetch=FetchType.EAGER)
     private List<Comment> comments;
 
     public String getUsername() {

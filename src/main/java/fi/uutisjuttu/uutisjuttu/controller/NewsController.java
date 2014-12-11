@@ -2,7 +2,7 @@ package fi.uutisjuttu.uutisjuttu.controller;
 
 import fi.uutisjuttu.uutisjuttu.domain.News;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
-import fi.uutisjuttu.uutisjuttu.service.UutinenService;
+import fi.uutisjuttu.uutisjuttu.service.NewsService;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,7 +26,7 @@ public class NewsController {
     private NewsRepository newsRepository;
 
     @Autowired
-    private UutinenService uutinenService;
+    private NewsService newsService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String mostRecent(Model model) {
@@ -51,7 +51,7 @@ public class NewsController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String add(@RequestParam String url) {
-        uutinenService.lisaaUutinenOsoitteenPerusteella(url);
+        newsService.addNewsArticleByUrl(url);
         //uutinenRepository.save(uutinen);
         return "redirect:/uutiset";
     }

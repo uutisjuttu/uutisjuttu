@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Tilastot</title>
+        <meta charset="UTF-8"></meta>
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+
+    </head>
+    <body>
+        <div id="wrapper">
+            <div th:replace="navbar :: topbar"  id="topbar">
+            </div>
+            <div id="content">
+                <div>Tilastot</div>
+
+                <div>Palvelussa yhteensä artikkeleita n kpl ja kommentteja m kpl. </div>
+                
+                <div th:each="publisher : ${publishers}">
+                    <a th:href="@{/julkaisija/{id}(id=${publisher.id})}"><h3 th:text="${publisher.name}">Julkaisijan nimi</h3></a>
+                    <div th:if="${publisher.news != null}"><span th:text="${publisher.news.size()}">4</span> artikkelia</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
