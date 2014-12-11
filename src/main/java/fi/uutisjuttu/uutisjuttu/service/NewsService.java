@@ -84,14 +84,15 @@ public class NewsService {
 
         news = uutinenRepository.save(news);
 
-        Set<ConstraintViolation<News>> errors = validator.validate(news, News.class);
-        if (errors.size() > 0) {
-            System.out.println("ERRORS:");
-            for (ConstraintViolation<News> c : errors) {
-                System.out.println(c);
-            }
-            uutinenRepository.delete(news);
-        }
+//        Set<ConstraintViolation<News>> errors = validator.validate(news, News.class);
+//        if (errors.size() > 0) {
+//            System.out.println("ERRORS:");
+//            for (ConstraintViolation<News> c : errors) {
+//                System.out.println(c);
+//            }
+//            uutinenRepository.delete(news);
+//            return;
+//        }
 
         p.getNews().add(news);
         publisherRepository.save(p);
