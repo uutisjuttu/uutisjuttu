@@ -10,6 +10,11 @@ import fi.uutisjuttu.uutisjuttu.domain.Publisher;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import fi.uutisjuttu.uutisjuttu.repository.PublisherRepository;
 import java.util.ArrayList;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,60 +28,48 @@ public class NewsService {
 
     @Autowired
     private NewsRepository uutinenRepository;
-    
+
     @Autowired
     private PublisherRepository publisherRepository;
 
     @Async
     public void addNewsArticleByUrl(String url) {
-        News uutinen = new News();
-        uutinen.setDescription("odotappas hetkinen...");
-        uutinen = uutinenRepository.save(uutinen);
-        int asetetutAttribuutit = 0;
+        News news = new News();
+//        news.setDescription("odotappas hetkinen...");
+//        news = uutinenRepository.save(news);
+        String publisher = "";
         try {
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(url).
+                    userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Safari/537.36")
+                    .get();
+
             Elements elem = doc.head().getElementsByTag("meta");
             for (Element e : elem) {
+//                System.out.println(e.attr("property") + ": " + e.attr("content"));
                 if (e.attr("property").equals("og:description")) {
-                    uutinen.setDescription(e.attr("content"));
-                    asetetutAttribuutit++;
+                    news.setDescription(e.attr("content"));
                 }
 
                 if (e.attr("property").equals("og:title")) {
-                    uutinen.setTitle(e.attr("content"));
-                    asetetutAttribuutit++;
+                    news.setTitle(e.attr("content"));
                 }
 
                 if (e.attr("property").equals("og:url")) {
-                    uutinen.setUrl(e.attr("content"));
-                    asetetutAttribuutit++;
+                    news.setUrl(e.attr("content"));
                 }
 
                 if (e.attr("property").equals("og:site_name")) {
-                    setPublisher(uutinen, e.attr("content"));
-                    asetetutAttribuutit++;
+                    publisher = e.attr("content");
                 }
 
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            uutinenRepository.delete(uutinen);
+            uutinenRepository.delete(news);
             return;
         }
 
-        if (asetetutAttribuutit != 4) {
-            System.out.println("asetetut attribuutit eri suuri kuin 4! (" + asetetutAttribuutit + ")");
-            uutinenRepository.delete(uutinen);
-        }
-
-        uutinenRepository.save(uutinen);
-
-        return;
-    }
-    
-    private void setPublisher(News news, String publisher) {
-        System.out.println("setPublisher " + news + " publisher " + publisher);
         Publisher p = publisherRepository.findByName(publisher);
         if (p == null) {
             p = new Publisher();
@@ -84,9 +77,23 @@ public class NewsService {
             p.setNews(new ArrayList<News>());
             p = publisherRepository.save(p);
         }
+        news.setPublisher(p);
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        news = uutinenRepository.save(news);
+
+        Set<ConstraintViolation<News>> errors = validator.validate(news, News.class);
+        if (errors.size() > 0) {
+            System.out.println("ERRORS:");
+            for (ConstraintViolation<News> c : errors) {
+                System.out.println(c);
+            }
+            uutinenRepository.delete(news);
+        }
+
         p.getNews().add(news);
         publisherRepository.save(p);
-        news.setPublisher(p);
     }
-
 }

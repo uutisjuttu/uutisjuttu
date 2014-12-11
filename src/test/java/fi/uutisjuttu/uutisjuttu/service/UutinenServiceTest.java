@@ -32,6 +32,7 @@ public class UutinenServiceTest {
 
         Thread.sleep(1000);
 
+        //News u = uutinenRepository.findOne(3l);
         News u = uutinenRepository.findByUrl("http://localhost:8080/test/uutinen1?jako=1");
 
         assertNotNull(u);
@@ -49,5 +50,4 @@ public class UutinenServiceTest {
 //        Thread.sleep(1000);
 //        assertEquals(3, uutinenRepository.findAll().size());
 //    }
-
 }
