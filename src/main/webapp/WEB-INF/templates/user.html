@@ -13,31 +13,25 @@ and open the template in the editor.
     </head>
     <body>
         <div id="wrapper">
-            <div th:replace="navbar :: topbar"  id="topbar">
+            <div th:replace="fragments/navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
                 <div>Käyttäjä:</div>
 
                 <div>Nimi: <span th:text="${user.username}"></span></div>
-                <span sec:authorize="hasRole('SUPERUSER')">
-                    <form th:action="@{/kayttajat/{username}/delete(username=${user.username})}" method="POST"><input type="submit" value="poista käyttäjä"/></form>
+                <span sec:authorize="hasRole('ROLE_SUPERUSER')">
+                    <form id="deleteuser" th:action="@{/kayttajat/{username}/delete(username=${user.username})}" method="POST"><input type="submit" value="poista käyttäjä"/></form>
                 </span>
 
-                <span sec:authorize="isAuthenticated()">
-                    <form th:action="@{/kayttajat/{username}/delete(username=${user.username})}" method="POST"><input type="submit" value="yritä poistaa käyttäjä"/></form>
-                </span>
+<!--                <span sec:authorize="isAuthenticated()">
+                    <form id="trydeleteuser" th:action="@{/kayttajat/{username}/delete(username=${user.username})}" method="POST"><input type="submit" value="yritä poistaa käyttäjä"/></form>
+                </span>-->
 
                 <div>Kommentit: </div>
 
                 <div th:each="comment : ${user.comments}">
-                    <a th:href="@{/uutiset/{id}(id=${comment.news.id})}"><h3 th:text="${comment.news.title}">Otsikko</h3></a>
-                    <span class="kommentti">
-                        <span th:text="${comment.postDate}">created</span>
-                        &lt;
-                        <span class="kommentti" th:text="${comment.author != null} ? ${comment.author.username} : 'Anonyymi'">Anssi</span>
-                        &gt;: 
-                    </span>
-                    <span class="kommentti" th:text="${comment.content}">joopa joo</span>
+                    <a th:href="@{/uutiset/{id}(id=${comment.news.id})}"><h4 th:text="${comment.news.title}">Otsikko</h4></a>
+                    <div th:replace="fragments/comment :: comment"></div>
                 </div>
             </div>
         </div>

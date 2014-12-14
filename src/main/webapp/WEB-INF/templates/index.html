@@ -7,11 +7,11 @@
     </head>
     <body>
         <div id="wrapper">
-            <div th:replace="navbar :: topbar"  id="topbar">
+            <div th:replace="fragments/navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
                 <h1>Moi maailma</h1>
-                <p>Oleskelette nyt paikalla, johon on paraikaa rakentumassa eeppinen uutissivusto</p>
+                <p>Oleskelette nyt paikalla, johon on paraikaa rakentumassa <span sec:authorize="isAnonymous() or (isAuthenticated() and isAnonymous())">eeppinen </span>uutissivusto</p>
                 <a href="uutiset">uutiset</a>
             </div>
         </div>

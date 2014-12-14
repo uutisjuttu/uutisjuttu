@@ -70,6 +70,12 @@ public class DevProfile {
         k1.setPassword("salasana");
         k1.setKommentit(new ArrayList<Comment>());
         k1 = userRepository.save(k1);
+        
+        User k2 = new User();
+        k2.setUsername("anssi");
+        k2.setPassword("kela");
+        k2.setKommentit(new ArrayList<Comment>());
+        k2 = userRepository.save(k2);
 
         Comment kommentti1 = new Comment();
         kommentti1.setAuthor(k1);

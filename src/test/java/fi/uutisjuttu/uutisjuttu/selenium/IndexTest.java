@@ -2,6 +2,11 @@ package fi.uutisjuttu.uutisjuttu.selenium;
 
 import fi.uutisjuttu.uutisjuttu.Application;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
@@ -9,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -126,4 +132,92 @@ public class IndexTest {
         assertTrue(driver.getPageSource().contains("kirjautunut:"));
     }
 
+    @Test
+    public void kayttajaListausEiNayKirjautumattomalle() {
+        driver.get("http://localhost:8080/kayttajat");
+        assertFalse(driver.getPageSource().contains("testaaja"));
+    }
+
+    @Test
+    public void kayttajaListausEiNayKirjautuneelle() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("anssi", "kela");
+        driver.get("http://localhost:8080/kayttajat");
+        assertFalse(driver.getPageSource().contains("testaaja"));
+    }
+
+    @Test
+    public void kayttajaListausNakyyYllapitajalle() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("admin", "admin");
+        driver.get("http://localhost:8080/kayttajat");
+        assertTrue(driver.getPageSource().contains("testaaja"));
+    }
+
+    @Test
+    public void kayttajanProfiiliEiNayKirjautumattomalle() {
+        driver.get("http://localhost:8080/kayttajat/testaaja");
+        assertFalse(driver.getPageSource().contains("testaaja"));
+    }
+
+    @Test
+    public void kayttajanProfiiliNakyyKirjautuneelle() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("anssi", "kela");
+        driver.get("http://localhost:8080/kayttajat/testaaja");
+        assertTrue(driver.getPageSource().contains("testaaja"));
+    }
+
+    @Test
+    public void kayttajaTilinPoistamisNappiEiNayMuilleKuinAdminille() {
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("anssi", "kela");
+        driver.get("http://localhost:8080/kayttajat/testaaja");
+        assertFalse(elementExists("deleteuser"));
+    }
+
+    private boolean elementExists(String id) {
+        try {
+            driver.findElement(By.id(id));
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Test
+    public void adminVoiPoistaaKayttajatunnuksen() {
+        driver.get("http://localhost:8080");
+        driver.findElement(By.linkText("Tee tunnus")).click();
+        driver.findElement(By.name("username")).sendKeys("poistettava1");
+        driver.findElement(By.name("password")).sendKeys("roska");
+        driver.findElement(By.name("password")).submit();
+        driver.get("http://localhost:8080");
+        kirjauduSisaan("admin", "admin");
+        driver.get("http://localhost:8080/kayttajat");
+        assertTrue(driver.getPageSource().contains("poistettava1"));
+        driver.get("http://localhost:8080/kayttajat/poistettava1");
+        driver.findElement(By.id("deleteuser")).submit();
+        driver.get("http://localhost:8080/kayttajat");
+        assertFalse(driver.getPageSource().contains("poistettava1"));
+    }
+
+//    @Test
+//    public void muuKuinAdminEiVoiPoistaaKayttajaTunnusta() {
+//        driver = new HtmlUnitDriver(true);
+//        driver.get("http://localhost:8080");
+//        driver.findElement(By.linkText("Tee tunnus")).click();
+//        driver.findElement(By.name("username")).sendKeys("poistettava2");
+//        driver.findElement(By.name("password")).sendKeys("roska");
+//        driver.findElement(By.name("password")).submit();
+//        driver.get("http://localhost:8080");
+//        kirjauduSisaan("anssi", "kela");
+//        driver.get("http://localhost:8080/kayttajat/poistettava2");
+//        driver.findElement(By.id("trydeleteuser")).submit();
+//        driver.get("http://localhost:8080");
+//        driver.findElement(By.linkText("Kirjaudu ulos")).click();
+//        kirjauduSisaan("admin", "admin");
+//        driver.get("http://localhost:8080/kayttajat");
+//        assertTrue(driver.getPageSource().contains("poistettava2"));
+//    }
 }

@@ -48,7 +48,7 @@ public class JpaAuthenticationProvider implements AuthenticationProvider {
 
         if (kayttaja.isSuperuser()) {
             System.out.println("super user!");
-            grantedAuths.add(new SimpleGrantedAuthority("SUPERUSER"));
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_SUPERUSER"));
         }
         
         return new UsernamePasswordAuthenticationToken(kayttaja.getUsername(), password, grantedAuths);

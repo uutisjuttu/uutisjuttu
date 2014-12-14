@@ -23,9 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private UserService userService;
-
+    @Secured("ROLE_SUPERUSER")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("users", userRepository.findAll());
@@ -38,12 +36,17 @@ public class UserController {
         return "user";
     }
 
-    @Secured("SUPERUSER")
+    @Secured("ROLE_SUPERUSER")
     @Transactional
     @RequestMapping(value = "/{username}/delete", method = RequestMethod.POST)
     public String delete(@PathVariable String username, Model model) {
         User user = userRepository.findByUsername(username);
-        System.out.println("user: " + user);
+
+        for (Comment c : user.getComments()) {
+            c.getNews().getComments().remove(c);
+            c.setAuthor(null);
+        }
+
         userRepository.delete(user);
         return "redirect:/index";
     }

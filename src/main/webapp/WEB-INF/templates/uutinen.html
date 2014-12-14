@@ -7,11 +7,9 @@
     </head>
     <body>
         <div id="wrapper">
-            <div th:replace="navbar :: topbar"  id="topbar">
+            <div th:replace="fragments/navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
-
-                <div th:include="navbar :: copy"></div>
 
                 <div id="pubdate"><p>Lisätty palveluun <span th:text="${#calendars.format(news.submitted,'dd.M.yyyy')}">01.01.1970</span></p></div>
                 <!--                <a th:href="${uutinen.url}" href="http://www.hs.fi/kaupunki/a1416107739345?jako=28c44ef205324f73b4da39dd4534ab46&ref=og-url">-->
@@ -39,6 +37,12 @@
                     <input type="submit" value="Kommentoi"/>
                 </form>
 
+                
+                <div th:each="comment : ${news.comments}">
+                    <div th:replace="fragments/comment :: comment"></div>
+                </div>
+                
+                <!--/*--> 
                 <div th:each="comment : ${news.comments}">
                     <span class="kommentti">
                         <span th:text="${comment.postDate}">created</span>
@@ -52,6 +56,8 @@
                     <span class="kommentti" th:text="${comment.content}">joopa joo</span>
                     <form th:if="${comment.author != null and comment.author.username == #authentication.name}" th:action="@{/kommentit/{id}/delete(id=${comment.id})}" method="POST"><input type="submit" value="delete"/></form>
                 </div>
+                <!--*/-->
+
 
             </div>
         </div>
