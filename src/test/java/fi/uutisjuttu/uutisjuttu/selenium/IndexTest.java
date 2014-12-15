@@ -1,6 +1,8 @@
 package fi.uutisjuttu.uutisjuttu.selenium;
 
 import fi.uutisjuttu.uutisjuttu.Application;
+import fi.uutisjuttu.uutisjuttu.SynchronizedApplicationRunner;
+import org.jsoup.Jsoup;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertFalse;
@@ -30,7 +32,7 @@ public class IndexTest {
 
     @BeforeClass
     public static void setUpClass() {
-        SpringApplication.run(Application.class);
+        SynchronizedApplicationRunner.run();
     }
 
     @Before
