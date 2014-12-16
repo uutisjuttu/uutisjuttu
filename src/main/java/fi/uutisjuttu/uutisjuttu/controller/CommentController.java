@@ -32,7 +32,7 @@ public class CommentController {
 
     @Autowired
     private UserService kayttajaService;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String listComments(Model model) {
         model.addAttribute("comments", kommenttiRepository.findAll());
@@ -58,10 +58,9 @@ public class CommentController {
             userRepository.save(lahettaja);
 
         }
-
         return "redirect:/uutiset/" + newsId;
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/{id}/delete")
     @Transactional
     public String deleteComment(@PathVariable Long id) {
@@ -72,8 +71,10 @@ public class CommentController {
         Long newsId = c.getNews().getId();
         c.getAuthor().getComments().remove(c);
         c.getNews().getComments().remove(c);
+        userRepository.save(c.getAuthor());
+        uutinenRepository.save(c.getNews());
         kommenttiRepository.delete(c);
-        return "redirect:/uutiset/" + newsId; 
+        return "redirect:/uutiset/" + newsId;
     }
 
 }

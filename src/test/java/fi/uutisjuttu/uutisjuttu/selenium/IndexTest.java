@@ -205,6 +205,22 @@ public class IndexTest {
     }
 
 //    @Test
+//    public void kayttajaVoiPoistaaOmanKommenttinsa() {
+//        driver.get("http://localhost:8080");
+//        kirjauduSisaan("anssi", "kela");
+//        driver.get("http://localhost:8080/uutiset");
+//        driver.findElement(By.partialLinkText("Suomalaistutkimus selvitti")).click();
+//        driver.findElement(By.name("content")).sendKeys("turha rokote");
+//        driver.findElement(By.name("content")).submit();
+//        assertTrue(driver.getPageSource().contains("turha rokote"));
+//        driver.findElement(By.className("deletionform")).submit();
+//        //driver.getPageSource()
+//        driver.get("http://localhost:8080/uutiset");
+//        driver.findElement(By.partialLinkText("Suomalaistutkimus selvitti")).click();
+//        assertFalse(driver.getPageSource().contains("turha rokote"));
+//    }
+
+//    @Test
 //    public void muuKuinAdminEiVoiPoistaaKayttajaTunnusta() {
 //        driver = new HtmlUnitDriver(true);
 //        driver.get("http://localhost:8080");

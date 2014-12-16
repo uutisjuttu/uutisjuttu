@@ -23,7 +23,7 @@ and open the template in the editor.
                 &gt;: 
             </span>
             <span class="kommentti" th:text="${comment.content}">joopa joo</span>
-            <form th:if="${comment.author != null and comment.author.username == #authentication.name}" th:action="@{/kommentit/{id}/delete(id=${comment.id})}" method="POST"><input type="submit" value="delete"/></form>
+            <form class="deletionform" th:id="@{delete-{id}(id=${comment.id})}" th:if="${#authorization.expression('hasRole(''ROLE_SUPERUSER'')') or (comment.author != null and comment.author.username == #authentication.name)}" th:action="@{/kommentit/{id}/delete(id=${comment.id})}" method="POST"><input type="submit" value="delete"/></form>
         </div>
 
     </body>
