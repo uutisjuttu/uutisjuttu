@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Publisher extends AbstractPersistable<Long>{
     
     private String name;
-    @OneToMany(fetch=FetchType.EAGER)
+    @OneToMany
     private List<News> news;
 
     public String getName() {

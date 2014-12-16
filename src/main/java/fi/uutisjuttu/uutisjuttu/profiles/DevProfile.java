@@ -63,14 +63,36 @@ public class DevProfile {
         u2 = uutinenRepository.save(u2);
 
         p2.getNews().add(u2);
-        publisherRepository.save(p2);
+        p2 = publisherRepository.save(p2);
+
+        News u3 = new News();
+        u3.setUrl("http://jotain");
+        u3.setTitle("Suomalaistutkimus selvitti että kissat koiria sghsdfgassagdsfg");
+        u3.setDescription("Asiasta kertoi Seiska verkkosivuillaan.");
+        u3.setPublisher(p2);
+        u3.setComments(new ArrayList<Comment>());
+        u3 = uutinenRepository.save(u3);
+
+        p2.getNews().add(u3);
+        p2 = publisherRepository.save(p2);
+
+        News u4 = new News();
+        u4.setUrl("http://jotainmuuta");
+        u4.setTitle("Avaruuskulttuuri on täällä");
+        u4.setDescription("Asiasta kertoi Iltalehti verkkosivuillaan.");
+        u4.setPublisher(p2);
+        u4.setComments(new ArrayList<Comment>());
+        u4 = uutinenRepository.save(u4);
+
+        p2.getNews().add(u4);
+        p2 = publisherRepository.save(p2);
 
         User k1 = new User();
         k1.setUsername("testaaja");
         k1.setPassword("salasana");
         k1.setKommentit(new ArrayList<Comment>());
         k1 = userRepository.save(k1);
-        
+
         User k2 = new User();
         k2.setUsername("anssi");
         k2.setPassword("kela");
@@ -86,7 +108,7 @@ public class DevProfile {
         u2.getComments().add(kommentti1);
         uutinenRepository.save(u2);
         userRepository.save(k1);
-        
+
         User admin = new User();
         admin.setUsername("admin");
         admin.setPassword("admin");

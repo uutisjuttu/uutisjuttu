@@ -69,9 +69,11 @@ public class CommentController {
             return "redirect:/uutiset/";
         }
         Long newsId = c.getNews().getId();
-        c.getAuthor().getComments().remove(c);
+        if (c.getAuthor() != null) {
+            c.getAuthor().getComments().remove(c);
+            userRepository.save(c.getAuthor());
+        }
         c.getNews().getComments().remove(c);
-        userRepository.save(c.getAuthor());
         uutinenRepository.save(c.getNews());
         kommenttiRepository.delete(c);
         return "redirect:/uutiset/" + newsId;

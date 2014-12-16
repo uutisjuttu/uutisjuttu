@@ -29,7 +29,7 @@ public class News extends AbstractPersistable<Long> {
     private String imageUrl;
     @Temporal(TemporalType.DATE)
     private Date submitted;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<Comment> comments;
     @ManyToOne
     private Publisher publisher;

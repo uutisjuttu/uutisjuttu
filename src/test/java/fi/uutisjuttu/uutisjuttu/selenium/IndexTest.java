@@ -61,19 +61,18 @@ public class IndexTest {
 
     @Test
     public void kirjautuminenTestitunnuksellaToimii() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("testaaja", "salasana");
         assertTrue(driver.getPageSource().contains("kirjautunut:"));
     }
 
     @Test
     public void kirjautuminenVaarallaSalasanallaEiToimi() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("testaaja", "vaarasalasana");
         assertFalse(driver.getPageSource().contains("kirjautunut:"));
     }
 
     private void kirjauduSisaan(String tunnus, String salasana) {
+        driver.get("http://localhost:8080");
         WebElement element = driver.findElement(By.linkText("Kirjaudu sisään"));
         element.click();
         element = driver.findElement(By.name("username"));
@@ -97,7 +96,6 @@ public class IndexTest {
     @Test
     public void uloskirjautuminenToimii() {
         driver = new HtmlUnitDriver(true);
-        driver.get("http://localhost:8080");
         kirjauduSisaan("testaaja", "salasana");
         driver.findElement(By.linkText("Kirjaudu ulos")).click();
         assertFalse(driver.getPageSource().contains("kirjautunut:"));
@@ -106,29 +104,22 @@ public class IndexTest {
 
     @Test
     public void kommentointiToimiiAnonyymisti() {
-        driver.get("http://localhost:8080");
-        driver.findElement(By.linkText("Uutiset")).click();
-        driver.findElement(By.partialLinkText("New Yorkin uusi WTC-rakennus")).click();
-        driver.findElement(By.name("content")).sendKeys("lentokone tulee, oletko valmis?");
-        driver.findElement(By.name("content")).submit();
+        navigateToNewsWithTitle("New Yorkin uusi WTC-rakennus");
+        commentToNews("lentokone tulee, oletko valmis?");
         assertTrue(driver.getPageSource().contains("lentokone tulee, oletko valmis?"));
         assertTrue(driver.getPageSource().contains("Anonyymi"));
     }
 
     @Test
     public void kommentointiToimiiRekisteroityneena() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("testaaja", "salasana");
-        driver.findElement(By.linkText("Uutiset")).click();
-        driver.findElement(By.partialLinkText("New Yorkin uusi WTC-rakennus")).click();
-        driver.findElement(By.name("content")).sendKeys("kuinkahan kauan meinaa pysya pystyssa");
-        driver.findElement(By.name("content")).submit();
+        navigateToNewsWithTitle("New Yorkin uusi WTC-rakennus");
+        commentToNews("kuinkahan kauan meinaa pysya pystyssa");
         assertTrue(driver.getPageSource().contains("kuinkahan kauan meinaa pysya pystyssa"));
     }
 
     @Test
     public void kommentoiduimmatUutisetSivuNakyy() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("testaaja", "salasana");
         driver.get("http://localhost:8080/uutiset/kommentoiduimmat");
         assertTrue(driver.getPageSource().contains("kirjautunut:"));
@@ -142,7 +133,6 @@ public class IndexTest {
 
     @Test
     public void kayttajaListausEiNayKirjautuneelle() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("anssi", "kela");
         driver.get("http://localhost:8080/kayttajat");
         assertFalse(driver.getPageSource().contains("testaaja"));
@@ -150,7 +140,6 @@ public class IndexTest {
 
     @Test
     public void kayttajaListausNakyyYllapitajalle() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("admin", "admin");
         driver.get("http://localhost:8080/kayttajat");
         assertTrue(driver.getPageSource().contains("testaaja"));
@@ -164,7 +153,6 @@ public class IndexTest {
 
     @Test
     public void kayttajanProfiiliNakyyKirjautuneelle() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("anssi", "kela");
         driver.get("http://localhost:8080/kayttajat/testaaja");
         assertTrue(driver.getPageSource().contains("testaaja"));
@@ -172,7 +160,6 @@ public class IndexTest {
 
     @Test
     public void kayttajaTilinPoistamisNappiEiNayMuilleKuinAdminille() {
-        driver.get("http://localhost:8080");
         kirjauduSisaan("anssi", "kela");
         driver.get("http://localhost:8080/kayttajat/testaaja");
         assertFalse(elementExists("deleteuser"));
@@ -194,7 +181,6 @@ public class IndexTest {
         driver.findElement(By.name("username")).sendKeys("poistettava1");
         driver.findElement(By.name("password")).sendKeys("roska");
         driver.findElement(By.name("password")).submit();
-        driver.get("http://localhost:8080");
         kirjauduSisaan("admin", "admin");
         driver.get("http://localhost:8080/kayttajat");
         assertTrue(driver.getPageSource().contains("poistettava1"));
@@ -204,21 +190,51 @@ public class IndexTest {
         assertFalse(driver.getPageSource().contains("poistettava1"));
     }
 
-//    @Test
-//    public void kayttajaVoiPoistaaOmanKommenttinsa() {
-//        driver.get("http://localhost:8080");
-//        kirjauduSisaan("anssi", "kela");
-//        driver.get("http://localhost:8080/uutiset");
-//        driver.findElement(By.partialLinkText("Suomalaistutkimus selvitti")).click();
-//        driver.findElement(By.name("content")).sendKeys("turha rokote");
-//        driver.findElement(By.name("content")).submit();
-//        assertTrue(driver.getPageSource().contains("turha rokote"));
-//        driver.findElement(By.className("deletionform")).submit();
-//        //driver.getPageSource()
-//        driver.get("http://localhost:8080/uutiset");
-//        driver.findElement(By.partialLinkText("Suomalaistutkimus selvitti")).click();
-//        assertFalse(driver.getPageSource().contains("turha rokote"));
-//    }
+    @Test
+    public void kayttajaVoiPoistaaOmanKommenttinsa() {
+        kirjauduSisaan("anssi", "kela");
+        navigateToNewsWithTitle("Suomalaistutkimus selvitti");
+        commentToNews("turha rokote");
+        assertTrue(driver.getPageSource().contains("turha rokote"));
+        driver.findElement(By.className("deletionform")).submit();
+        navigateToNewsWithTitle("Suomalaistutkimus selvitti");
+        assertFalse(driver.getPageSource().contains("turha rokote"));
+    }
+
+    @Test
+    public void adminVoiPoistaaKommentteja() {
+        driver = new HtmlUnitDriver(true);
+        navigateToNewsWithTitle("Avaruuskulttuuri");
+        commentToNews("onhan se jo ollutkin mutta siita ei saa puhua");
+
+        kirjauduSisaan("admin", "admin");
+        navigateToNewsWithTitle("Avaruuskulttuuri");
+        driver.findElement(By.className("deletionform")).submit();
+        navigateToNewsWithTitle("Avaruuskulttuuri");
+        assertFalse(driver.getPageSource().contains("ei saa puhua"));
+
+        driver.findElement(By.linkText("Kirjaudu ulos")).click();
+        kirjauduSisaan("testaaja", "salasana");
+        navigateToNewsWithTitle("Avaruuskulttuuri");
+        commentToNews("sanoiko joku jotain?");
+        driver.findElement(By.linkText("Kirjaudu ulos")).click();
+
+        kirjauduSisaan("admin", "admin");
+        navigateToNewsWithTitle("Avaruuskulttuuri");
+        driver.findElement(By.className("deletionform")).submit();
+        navigateToNewsWithTitle("Avaruuskulttuuri");
+        assertFalse(driver.getPageSource().contains("sanoiko joku jotain"));
+    }
+
+    private void navigateToNewsWithTitle(String text) {
+        driver.get("http://localhost:8080/uutiset");
+        driver.findElement(By.partialLinkText(text)).click();
+    }
+
+    private void commentToNews(String text) {
+        driver.findElement(By.name("content")).sendKeys(text);
+        driver.findElement(By.name("content")).submit();
+    }
 
 //    @Test
 //    public void muuKuinAdminEiVoiPoistaaKayttajaTunnusta() {

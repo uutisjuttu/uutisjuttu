@@ -31,17 +31,11 @@ public class UutinenServiceTest {
     @BeforeClass
     public static void laitaServeriPaalle() {
         SynchronizedApplicationRunner.run();
-
-//        try {
-//            Jsoup.connect("localhost:8080");
-//        } catch (Exception e) {
-//            SpringApplication.run(Application.class);
-//        }
     }
 
     @Test
-    public void alussaOnKaksiUutista() {
-        assertEquals(2, uutinenRepository.findAll().size());
+    public void alussaOnNeljaUutista() {
+        assertEquals(4, uutinenRepository.findAll().size());
     }
 
     @Test
@@ -54,7 +48,6 @@ public class UutinenServiceTest {
             fail("Thread.sleep(1000) heitti poikkeuksen!");
             e.printStackTrace();
         }
-        //News u = uutinenRepository.findOne(3l);
         News u = uutinenRepository.findByUrl("http://localhost:8080/test/uutinen1?jako=1");
 
         assertNotNull(u);
