@@ -53,6 +53,11 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String lisaaKayttaja(@Valid @ModelAttribute User kayttaja) {
+        if ("admin".equals(kayttaja.getUsername())) {
+            if (userRepository.findByUsername("admin") == null) {
+                kayttaja.setSuperuser(true);
+            }
+        }
         userRepository.save(kayttaja);
         return "redirect:/index";
     }
