@@ -1,9 +1,13 @@
 package fi.uutisjuttu.uutisjuttu.profiles;
 
+import fi.uutisjuttu.uutisjuttu.domain.User;
+import fi.uutisjuttu.uutisjuttu.repository.UserRepository;
 import java.net.URI;
 import java.net.URISyntaxException;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,6 +20,18 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @Profile("prod")
 public class ProdProfile {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostConstruct
+    public void init() {
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword("admin");
+        admin.setSuperuser(true);
+        userRepository.save(admin);
+    }
 
     @Bean
     public PlatformTransactionManager transactionManager() throws URISyntaxException {
