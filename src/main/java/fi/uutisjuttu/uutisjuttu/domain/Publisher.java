@@ -10,9 +10,20 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Publisher extends AbstractPersistable<Long>{
     
     private String name;
+    
+    private String shortname;
+    
     @OneToMany
     private List<News> news;
 
+    public String getShortname() {
+        return shortname;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
+    }
+    
     public String getName() {
         return name;
     }

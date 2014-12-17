@@ -18,12 +18,40 @@ and open the template in the editor.
             <div id="content">
                 <div>Tilastot</div>
 
-                <div>Palvelussa yhteensä artikkeleita n kpl ja kommentteja m kpl. </div>
-                
-                <div th:each="publisher : ${publishers}">
+                <div>Palvelussa yhteensä artikkeleita <span th:text="${news_count}">n</span> kpl ja kommentteja <span th:text="${comments_count}">m</span> kpl. </div>
+
+                <div class="publisher-box" th:each="publisher : ${publishers}">
+                    <img class="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>
                     <a th:href="@{/julkaisija/{id}(id=${publisher.id})}"><h3 th:text="${publisher.name}">Julkaisijan nimi</h3></a>
                     <div th:if="${publisher.news != null}"><span th:text="${publisher.news.size()}">4</span> artikkelia</div>
                 </div>
+
+                <!--/*--> 
+                <div class="publisher-box">
+                    <img class="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>
+                    <a><h3>Julkaisijan nimi</h3></a>
+                    <div><span>4</span> artikkelia</div>
+                </div>
+
+                <div class="publisher-box">
+                    <img class="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>
+                    <a><h3>Julkaisijan nimi</h3></a>
+                    <div><span>4</span> artikkelia</div>
+                </div>
+
+                <div class="publisher-box">
+                    <img class="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>
+                    <a><h3>Julkaisijan nimi</h3></a>
+                    <div><span>4</span> artikkelia</div>
+                </div>
+
+                <div class="publisher-box">
+                    <img class="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>
+                    <a><h3>Julkaisijan nimi</h3></a>
+                    <div><span>4</span> artikkelia</div>
+                </div>
+                <!--*/-->
+
             </div>
         </div>
     </body>

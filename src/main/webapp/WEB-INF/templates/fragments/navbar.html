@@ -9,6 +9,8 @@ and open the template in the editor.
 
     <head>
         <title>fragment</title>
+        <link rel="stylesheet" type="text/css" href="../../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+
     </head>
     <body>
 
@@ -18,20 +20,21 @@ and open the template in the editor.
                 <h2>-Mistä Suomi puhuu tänään?</h2>
             </div>
             <div id="navbar">
-                <span class="teksti">
-                    <a href="/uutiset">Uutiset</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="/uutiset/kommentoiduimmat">Kommentoiduimmat</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="/kommentit">Kommentit</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="/tilastot">Tilastot</a>
-                    &nbsp;&nbsp;&nbsp; 
-                    Tietoa palvelusta 
-                    &nbsp;&nbsp;&nbsp; 
-                    <span sec:authorize="isAuthenticated()">kirjautunut: <a th:href="@{/kayttajat/{username}(username=${#authentication.name})}" th:text="${#authentication.name}">nimimerkki</a> | <a href="#" onclick="document.getElementById('logout-form').submit();">Kirjaudu ulos</a></span>
-                    <span sec:authorize="isAnonymous()"><a href="/login">Kirjaudu sisään</a> | <a href="/signup">Tee tunnus</a></span> 
-                </span>
+                <ul>
+                    <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/uutiset') and !#httpServletRequest.requestURL.toString().contains('/kommentoiduimmat')) ? 'selected' : 'notselected'}"><a href="/uutiset">Uutiset</a></li>
+                    <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/uutiset/kommentoiduimmat')) ? 'selected' : 'notselected'}"><a href="/uutiset/kommentoiduimmat">Kommentoiduimmat</a></li>
+                    <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/kommentit')) ? 'selected' : 'notselected'}"><a href="/kommentit">Kommentit</a></li>
+                    <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/tilastot')) ? 'selected' : 'notselected'}"><a href="/tilastot">Tilastot</a></li>
+                    <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/tietoa')) ? 'selected' : 'notselected'}"><a href="/tietoa">Tietoa palvelusta</a></li>
+                    <span sec:authorize="isAuthenticated()">
+                        <li>kirjautunut: <a th:href="@{/kayttajat/{username}(username=${#authentication.name})}" th:text="${#authentication.name}">nimimerkki</a></li>
+                        <li><a href="#" onclick="document.getElementById('logout-form').submit();">Kirjaudu ulos</a></li>
+                    </span>
+                    <span sec:authorize="isAnonymous()">
+                        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/login')) ? 'selected' : 'notselected'}"><a href="/login">Kirjaudu sisään</a></li>
+                        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/signup')) ? 'selected' : 'notselected'}"><a href="/signup">Tee tunnus</a></li>
+                    </span> 
+                </ul>
             </div>
 
             <form style="visibility: hidden; display: none" id ="logout-form" method="post" action="#" th:action="@{/logout}"><input type="submit" value="Logout"/></form>

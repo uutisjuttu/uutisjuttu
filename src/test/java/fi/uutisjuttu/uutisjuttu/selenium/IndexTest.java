@@ -40,12 +40,11 @@ public class IndexTest {
         this.driver = new HtmlUnitDriver();
     }
 
-    @Test
-    public void etusivullaOnSanaEeppinen() {
-        driver.get("http://localhost:8080");
-        assertTrue(driver.getPageSource().contains("eeppinen"));
-    }
-
+//    @Test
+//    public void etusivullaOnSanaEeppinen() {
+//        driver.get("http://localhost:8080");
+//        assertTrue(driver.getPageSource().contains("Eeppinen"));
+//    }
     @Test
     public void etusivullaEiOleSanaaSurkea() {
         driver.get("http://localhost:8080");
@@ -122,6 +121,13 @@ public class IndexTest {
     public void kommentoiduimmatUutisetSivuNakyy() {
         kirjauduSisaan("testaaja", "salasana");
         driver.get("http://localhost:8080/uutiset/kommentoiduimmat");
+        assertTrue(driver.getPageSource().contains("kirjautunut:"));
+    }
+
+    @Test
+    public void julkaisijanSivuNakyy() {
+        kirjauduSisaan("testaaja", "salasana");
+        driver.get("http://localhost:8080/julkaisija/2");
         assertTrue(driver.getPageSource().contains("kirjautunut:"));
     }
 

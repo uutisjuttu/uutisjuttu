@@ -11,18 +11,19 @@
             </div>
             <div id="content">
 
-                <div id="pubdate"><p>Lisätty palveluun <span th:text="${#calendars.format(news.submitted,'dd.M.yyyy')}">01.01.1970</span></p></div>
+                <div class="pubdate"><p>Lisätty palveluun <span th:text="${#calendars.format(news.submitted,'dd.M.yyyy')}">01.01.1970</span></p></div>
                 <!--                <a th:href="${uutinen.url}" href="http://www.hs.fi/kaupunki/a1416107739345?jako=28c44ef205324f73b4da39dd4534ab46&ref=og-url">-->
-                <a th:href="${news.url}">
 
-                    <div id="news-content"> 
-                        <img id="publisher-image" src="http://www.beneq.com/sites/default/files/imagecache/Logo/helsingin_sanomat%20copy.gif" width="80" height="80" alt="kuva"></img>
+                <div id="news-content"> 
+                    <a th:href="${news.url}">
+                        <img id="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${news.publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>
                         <div id="news-title-publisher">
                             <h3 th:text="${news.title}">Miesjoukko yltyi joukkotappeluun Vantaan Ikean parkkipaikalla</h3>
                             <span th:text="${news.publisher.name}">Julkaisijan nimi</span>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
                 <div id="news-description">
                     <p th:text="${news.description}">Noin neljäkymmentävuotias mies joutui ison miesjoukon pahoinpitelemäksi Ikean tavaratalon pysäköintialueella Vantaalla lauantaina iltapäivällä. </p>
                 </div>
@@ -32,16 +33,16 @@
                 <hr/>
 
                 <form method="POST" th:action="@{/kommentit}" enctype="multipart/form-data">
-                    <textarea name="content"></textarea>
+                    <input class="widefield" type="text" name="content" placeholder="Kommentoi artikkelia"></input>
                     <input type="hidden" name="newsId" th:value="${news.id}"/>
                     <input type="submit" value="Kommentoi"/>
                 </form>
 
-                
+
                 <div th:each="comment : ${news.comments}">
                     <div th:replace="fragments/comment :: comment"></div>
                 </div>
-                
+
                 <!--/*--> 
                 <div th:each="comment : ${news.comments}">
                     <span class="kommentti">

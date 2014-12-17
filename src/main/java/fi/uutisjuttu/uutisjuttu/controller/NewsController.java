@@ -30,7 +30,8 @@ public class NewsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String mostRecent(Model model) {
-        model.addAttribute("news", newsRepository.findAll());
+        Pageable pageable = new PageRequest(0, 50, Sort.Direction.DESC, "submitted");
+        model.addAttribute("news", newsRepository.findAll(pageable).getContent());
         return "uutiset";
     }
 

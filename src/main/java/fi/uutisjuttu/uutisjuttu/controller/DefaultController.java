@@ -18,10 +18,10 @@ public class DefaultController {
 
     @Autowired
     private UserService kayttajaService;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String getDefaultPage() {
-        return "index";
+        return "redirect:/uutiset";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -32,6 +32,11 @@ public class DefaultController {
     @RequestMapping(value = "signup", method = RequestMethod.GET)
     public String viewSignup(Model model) {
         return "signup";
+    }
+
+    @RequestMapping(value = "tietoa", method = RequestMethod.GET)
+    public String viewAbout() {
+        return "about";
     }
 
 }

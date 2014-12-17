@@ -12,17 +12,19 @@ and open the template in the editor.
     </head>
     <body>
 
-        <div th:fragment="comment">
-            <span class="kommentti">
-                <span th:text="${comment.postDate}">created</span>
-                &lt;
-                <a th:if="${comment.author != null}" th:href="@{/kayttajat/{username}(username=${comment.author.username})}">
-                    <span class="kommentti" th:text="${comment.author.username}">Anssi</span>
-                </a>
-                <span th:if="${comment.author == null}" class="kommentti">Anonyymi</span>
-                &gt;: 
-            </span>
-            <span class="kommentti" th:text="${comment.content}">joopa joo</span>
+        <div th:fragment="comment" class="kommentti">
+
+            <span th:text="${#calendars.format(comment.postDate,'dd.M.yyyy hh:mm')}">01.01.1970 00:00</span>
+            No. 
+            <a><span th:text="${comment.id}">1337</span></a>
+            &lt;
+            <a th:if="${comment.author != null}" th:href="@{/kayttajat/{username}(username=${comment.author.username})}">
+                <span th:text="${comment.author.username}">Anssi</span>
+            </a>
+            <span th:if="${comment.author == null}">Anonyymi</span>
+            &gt;: 
+
+            <span th:text="${comment.content}">joopa joo</span>
             <form class="deletionform" th:id="@{delete-{id}(id=${comment.id})}" th:if="${#authorization.expression('hasRole(''ROLE_SUPERUSER'')') or (comment.author != null and comment.author.username == #authentication.name)}" th:action="@{/kommentit/{id}/delete(id=${comment.id})}" method="POST"><input type="submit" value="delete"/></form>
         </div>
 

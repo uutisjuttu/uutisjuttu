@@ -11,18 +11,10 @@
             <div th:replace="fragments/navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
-                <h2>Sign Up Form</h2>
+                <h2>Luo uusi käyttäjätunnus</h2>
                 <form method="POST" th:action="@{/kayttajat}">
-                    <div class="text-boxs">
-                        <span class="text-box">
-                            <label class="s-user"></label>
-                            <input type="text" name="username" placeholder="Username" />
-                        </span>
-                        <span class="text-box">
-                            <label class="s-lock"></label>
-                            <input type="text" name="password" placeholder="Password" />
-                        </span>
-                    </div>
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
                     <input type="submit" value="sign up" />
                 </form>
             </div>

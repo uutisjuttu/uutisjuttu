@@ -35,11 +35,13 @@ public class DevProfile {
 
         Publisher p1 = new Publisher();
         p1.setName("Yle Uutiset");
+        p1.setShortname("yle");
         p1.setNews(new ArrayList<News>());
         p1 = publisherRepository.save(p1);
 
         Publisher p2 = new Publisher();
         p2.setName("HS.fi");
+        p2.setShortname("hs");
         p2.setNews(new ArrayList<News>());
         p2 = publisherRepository.save(p2);
 

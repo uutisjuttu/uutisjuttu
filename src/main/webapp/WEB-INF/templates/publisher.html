@@ -9,26 +9,21 @@ and open the template in the editor.
         <title>Uutiset</title>
         <meta charset="UTF-8"></meta>
         <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
-
     </head>
     <body>
         <div id="wrapper">
             <div th:replace="fragments/navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
-                <div th:text="${publisher.name}">Uutiset:</div>
+<!--                <img id="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img>-->
+                <h2 th:text="${publisher.name}">Julkaisijan nimi</h2>
+                <p>Palveluun on lisätty yhteensä <span th:text="${publisher.news.size()}">4</span> julkaisijan tuottamaa uutista.</p>
 
                 <div th:each="uutinen : ${publisher.news}">
-                    <a th:href="@{/uutiset/{id}(id=${uutinen.id})}"><h3 th:text="${uutinen.title}">Otsikko</h3></a>
-                    <div th:text="${uutinen.description}">url</div>
-                    <div th:if="${uutinen.comments != null}"><span th:text="${uutinen.comments.size()}">4</span> kommenttia</div>
+                    <div th:replace="fragments/newslist :: news-content"></div>
+                    <hr/>
                 </div>
 
-                <div>Lisää uutinen:</div>
-                <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">
-                    <textarea name="url"></textarea>
-                    <input type="submit" value="Lisää"/>
-                </form>
             </div>
         </div>
     </body>

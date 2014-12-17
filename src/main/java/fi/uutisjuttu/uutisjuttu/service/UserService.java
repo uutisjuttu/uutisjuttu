@@ -24,10 +24,6 @@ public class UserService {
         if (authentication == null) {
             return null;
         }
-        User user = userRepository.findByUsername(authentication.getName());
-        if (user != null) {
-            System.out.println("admin: " + user.isSuperuser());
-        }
-        return user;
+        return userRepository.findByUsername(authentication.getName());
     }
 }

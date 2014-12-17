@@ -2,15 +2,12 @@ package fi.uutisjuttu.uutisjuttu.domain;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 //import javax.persistence.PostLoad;
 //import javax.persistence.Transient;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -18,16 +15,17 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class News extends AbstractPersistable<Long> {
 
-    @URL
-    @NotNull
+//    @URL
+//    @NotNull
     private String url;
-    @NotNull
+//    @NotNull
+    @Column(length=1000)
     private String description;
-    @NotNull
+//    @NotNull
     private String title;
-    @URL
+//    @URL
     private String imageUrl;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date submitted;
     @OneToMany
     private List<Comment> comments;
@@ -38,25 +36,6 @@ public class News extends AbstractPersistable<Long> {
         this.submitted = new Date();
     }
 
-//    @Transient
-//    private int numberOfComments;
-//    
-//    public News() {
-//        this.numberOfComments = 0;
-//    }
-//
-//    @PostLoad
-//    public void countComments() {
-//        this.numberOfComments = this.comments.size();
-//    }
-//
-//    public int getNumberOfComments() {
-//        return this.numberOfComments;
-//    }
-//
-//    public void setNumberOfComments(int numberOfComments) {
-//        this.numberOfComments = numberOfComments;
-//    }
     public Publisher getPublisher() {
         return publisher;
     }
@@ -86,6 +65,9 @@ public class News extends AbstractPersistable<Long> {
     }
 
     public void setDescription(String description) {
+        if (description.length()>1000) {
+            description = description.substring(0, 999);
+        }
         this.description = description;
     }
 

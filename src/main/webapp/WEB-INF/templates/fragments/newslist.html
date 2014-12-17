@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>fragment</title>
+        <link rel="stylesheet" type="text/css" href="../../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+
+    </head>
+    <body>
+
+        <div th:fragment="news-content" id="news-content"> 
+            <a th:href="@{/julkaisija/{id}(id=${uutinen.publisher.id})}"><img id="publisher-image" th:src="@{/static/images/publisher/{name}.png(name=${uutinen.publisher.shortname})}" src="../../static/images/publisher/hs.png" width="80" height="80" alt="kuva"></img></a>
+            <div id="news-title-publisher">
+                <a th:href="@{/uutiset/{id}(id=${uutinen.id})}"><h3 th:text="${uutinen.title}">Templateen on laitettu testiuutinen</h3></a>
+                <div th:text="${uutinen.description}">Tänään iltapäivällä template-tiedostoon lisättiin uutinen.</div>
+                <div class="pubdate">Lisätty palveluun <span th:text="${#calendars.format(uutinen.submitted,'dd.M.yyyy')}">01.01.1970</span> - <span th:if="${uutinen.comments != null}"><span th:text="${uutinen.comments.size()}">4</span> kommenttia</span></div>
+            </div>
+        </div>
+
+    </body>
+
+</html>

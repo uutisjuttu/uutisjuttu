@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/static/css/style.css}"></link>
+        <title>Uutiset</title>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div th:replace="fragments/navbar :: topbar"  id="topbar">
+            </div>
+            <div id="content">
+                <h2>Mikä ihmeen Uutisjuttu?</h2>
+                <p>Uutisjuttu on suomalainen uutisartikkeleiden jakamiseen ja kommentointiin keskittynyt internet-yhteisö. Käyttäjät voivat jakaa linkkejä uutisartikkeleihin ja kommentoida ja arvostella niitä. Palvelun kautta leviää nopeasti tieto siitä, mitkä jutut ovat lukemisen arvoisia ja mitä ihmiset ovat niistä oikeasti mieltä.</p>
+            </div>
+        </div>
+    </body>
+</html>
