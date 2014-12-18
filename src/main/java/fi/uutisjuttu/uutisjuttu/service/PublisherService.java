@@ -12,7 +12,6 @@ import fi.uutisjuttu.uutisjuttu.repository.PublisherRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,6 @@ public class PublisherService {
         publishers.put("Kauppalehti.fi", "kauppalehti");
         publishers.put("Nyt.fi", "nyt");
         publishers.put("Uusi Suomi", "uusisuomi");
-        publishers.put("Metro.fi", "metro");
         publishers.put("Kaleva.fi", "kaleva");
     }
     

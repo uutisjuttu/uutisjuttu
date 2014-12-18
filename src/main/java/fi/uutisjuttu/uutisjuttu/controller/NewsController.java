@@ -3,6 +3,7 @@ package fi.uutisjuttu.uutisjuttu.controller;
 import fi.uutisjuttu.uutisjuttu.domain.News;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
 import fi.uutisjuttu.uutisjuttu.service.NewsService;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/uutiset")
@@ -51,8 +53,11 @@ public class NewsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String add(@RequestParam String url) {
-        newsService.addNewsArticleByUrl(url);
+    public String add(@RequestParam String url, RedirectAttributes redirectAttributes) {
+        List<String> errors = newsService.addNewsArticleByUrl(url);
+        if (!errors.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errors", errors);
+        }
         //uutinenRepository.save(uutinen);
         return "redirect:/uutiset";
     }

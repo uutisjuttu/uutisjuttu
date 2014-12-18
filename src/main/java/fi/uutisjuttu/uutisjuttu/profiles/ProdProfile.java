@@ -1,9 +1,15 @@
 package fi.uutisjuttu.uutisjuttu.profiles;
 
+import fi.uutisjuttu.uutisjuttu.domain.News;
+import fi.uutisjuttu.uutisjuttu.domain.Publisher;
+import fi.uutisjuttu.uutisjuttu.repository.PublisherRepository;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,6 +22,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @Profile("prod")
 public class ProdProfile {
+
+    @Autowired
+    private PublisherRepository publisherRepository;
 
     @Bean
     public PlatformTransactionManager transactionManager() throws URISyntaxException {
@@ -57,4 +66,14 @@ public class ProdProfile {
 
         return basicDataSource;
     }
+
+    @PostConstruct
+    public void init() {
+        Publisher p = new Publisher();
+        p.setName("Kaleva.fi");
+        p.setShortname("kaleva");
+        p.setNews(new ArrayList<News>());
+        publisherRepository.save(p);
+    }
+
 }

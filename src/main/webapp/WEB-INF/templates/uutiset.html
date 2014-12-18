@@ -16,6 +16,13 @@ and open the template in the editor.
             <div th:replace="fragments/navbar :: topbar"  id="topbar">
             </div>
             <div id="content">
+                
+                <div th:if="${errors}">
+                    Errors:
+                    <ul th:each="error : ${errors}">
+                        <li th:text="${error}">error</li>
+                    </ul>
+                </div>
 
                 <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">
                     <input class="widefield" type="url" name="url" placeholder="Lisää uutinen www-osoitteen perusteella"></input>
