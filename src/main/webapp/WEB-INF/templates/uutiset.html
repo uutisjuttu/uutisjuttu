@@ -17,11 +17,8 @@ and open the template in the editor.
             </div>
             <div id="content">
                 
-                <div th:if="${errors}">
-                    Errors:
-                    <ul th:each="error : ${errors}">
-                        <li th:text="${error}">error</li>
-                    </ul>
+                <div th:if="${error}">
+                    Virhe: <span th:text="${error}"></span>
                 </div>
 
                 <form method="POST" th:action="@{/uutiset}" enctype="multipart/form-data">

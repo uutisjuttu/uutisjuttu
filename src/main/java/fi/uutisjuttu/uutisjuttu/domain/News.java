@@ -66,7 +66,7 @@ public class News extends AbstractPersistable<Long> {
 
     public void setDescription(String description) {
         if (description.length()>1000) {
-            description = description.substring(0, 999);
+            description = description.substring(0, 1000);
         }
         this.description = description;
     }

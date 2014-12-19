@@ -2,11 +2,14 @@ package fi.uutisjuttu.uutisjuttu.controller;
 
 import fi.uutisjuttu.uutisjuttu.domain.News;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
+import fi.uutisjuttu.uutisjuttu.service.NewsException;
 import fi.uutisjuttu.uutisjuttu.service.NewsService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,10 +45,10 @@ public class NewsController {
 //        Pageable pageable = new PageRequest(0, 50, Sort.Direction.DESC, "numberOfComments");
 //        Pageable pageable = new PageRequest(0, 50, Sort.Direction.DESC, "title");
         List<News> content = newsRepository.findAll();
-        Collections.sort(content, new Comparator<News>(){
+        Collections.sort(content, new Comparator<News>() {
             @Override
             public int compare(News o1, News o2) {
-                return o2.getComments().size()-o1.getComments().size();
+                return o2.getComments().size() - o1.getComments().size();
             }
         });
         model.addAttribute("news", content);
@@ -54,10 +57,15 @@ public class NewsController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String add(@RequestParam String url, RedirectAttributes redirectAttributes) {
-        List<String> errors = newsService.addNewsArticleByUrl(url);
-        if (!errors.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errors", errors);
+        try {
+            newsService.addNewsArticleByUrl(url);
+        } catch (NewsException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
         }
+
+//        if (!errors.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("errors", errors);
+//        }
         //uutinenRepository.save(uutinen);
         return "redirect:/uutiset";
     }

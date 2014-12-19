@@ -23,9 +23,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Profile("prod")
 public class ProdProfile {
 
-    @Autowired
-    private PublisherRepository publisherRepository;
-
     @Bean
     public PlatformTransactionManager transactionManager() throws URISyntaxException {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -66,14 +63,4 @@ public class ProdProfile {
 
         return basicDataSource;
     }
-
-    @PostConstruct
-    public void init() {
-        Publisher p = new Publisher();
-        p.setName("Kaleva.fi");
-        p.setShortname("kaleva");
-        p.setNews(new ArrayList<News>());
-        publisherRepository.save(p);
-    }
-
 }

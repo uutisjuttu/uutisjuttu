@@ -12,6 +12,9 @@
             </div>
             <div id="content">
                 <h2>Luo uusi käyttäjätunnus</h2>
+                <div th:if="${error}">
+                    Virhe: <span th:text="${error}"></span>
+                </div>
                 <form method="POST" th:action="@{/kayttajat}">
                     <input type="text" name="username" placeholder="Username" />
                     <input type="password" name="password" placeholder="Password" />

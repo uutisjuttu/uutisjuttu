@@ -26,6 +26,8 @@ and open the template in the editor.
                     <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/kommentit')) ? 'selected' : 'notselected'}"><a href="/kommentit">Kommentit</a></li>
                     <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/tilastot')) ? 'selected' : 'notselected'}"><a href="/tilastot">Tilastot</a></li>
                     <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('/tietoa')) ? 'selected' : 'notselected'}"><a href="/tietoa">Tietoa palvelusta</a></li>
+                    <li sec:authorize="hasRole('ROLE_SUPERUSER')" th:classappend="${(#httpServletRequest.requestURL.toString().contains('/kayttajat')) ? 'selected' : 'notselected'}"><a href="/kayttajat">Käyttäjät</a></li>
+
                     <span sec:authorize="isAuthenticated()">
                         <li>kirjautunut: <a th:href="@{/kayttajat/{username}(username=${#authentication.name})}" th:text="${#authentication.name}">nimimerkki</a></li>
                         <li><a href="#" onclick="document.getElementById('logout-form').submit();">Kirjaudu ulos</a></li>

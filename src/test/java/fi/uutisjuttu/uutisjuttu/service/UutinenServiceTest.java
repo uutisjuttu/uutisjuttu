@@ -4,17 +4,20 @@ import fi.uutisjuttu.uutisjuttu.Application;
 import fi.uutisjuttu.uutisjuttu.SynchronizedApplicationRunner;
 import fi.uutisjuttu.uutisjuttu.domain.News;
 import fi.uutisjuttu.uutisjuttu.repository.NewsRepository;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -40,14 +43,12 @@ public class UutinenServiceTest {
 
     @Test
     public void uutisestaSaadaanLuettuaMetatiedotOikein() {
-        uutinenService.addNewsArticleByUrl("http://localhost:8080/test/uutinen1");
-
         try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            fail("Thread.sleep(1000) heitti poikkeuksen!");
-            e.printStackTrace();
+            uutinenService.addNewsArticleByUrl("http://localhost:8080/static/testpages/uutinen1.html");
+        } catch (NewsException ex) {
+            fail(ex.getMessage());
         }
+
         News u = uutinenRepository.findByUrl("http://localhost:8080/test/uutinen1?jako=1");
 
         assertNotNull(u);
@@ -58,11 +59,4 @@ public class UutinenServiceTest {
 
     }
 
-//    @Test
-//    public void uutisenLisaamisenJalkeenUutistenMaaraOnKolme() throws InterruptedException {
-//        Thread.sleep(1000);
-//        uutinenService.lisaaUutinenOsoitteenPerusteella("http://localhost:8080/test/uutinen1");
-//        Thread.sleep(1000);
-//        assertEquals(3, uutinenRepository.findAll().size());
-//    }
 }
