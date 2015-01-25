@@ -5,3 +5,11 @@ jdk:
   
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
+
+deploy:
+  provider: heroku
+  api_key:
+	secure: Apx0XeCX+YFqCxYJvqfln8oq96g+RvG5Lg2aIDrH8lp+5DT7Z8f5VGPNYm0ij8kjsUfTmYv7KQDvlZe4QHDEaNZIgUeVmGYx8qBDyEzB1NhhKnw6N1gIHp+kXnLp4bD23ojel2ZxisWCECD81hDVNhGZ3+/+GgiaSVFLYIOwOR8=
+  app: uutisjuttu
+  on:
+    repo: uutisjuttu/uutisjuttu
